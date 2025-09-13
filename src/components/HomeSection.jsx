@@ -4,23 +4,30 @@ const teachers = [
   {
     id: 1,
     name: "Mr. Shivam Sahani",
-    subject: "Mathematics",
+    subject: "Mathematics / English",
     qualification: "B.Sc , M.Sc",
-    image: "/images/teacher1.jpg",
+    image: "/Images/teacher1.jpg",
   },
   {
     id: 2,
     name: "Mr. Ramkaran Sahani",
-    subject: "Physics",
+    subject: "Physics / Social Science",
     qualification: "M.Sc",
-    image: "/images/teacher2.jpg",
+    image: "/Images/teacher2.jpg",
   },
   {
     id: 3,
     name: "Mr. Raj Sahani",
-    subject: "English",
+    subject: "Science / Hindi",
     qualification: "B.A , M.A  Politechnic [civil]",
-    image: "/images/teacher3.jpg",
+    image: "/Images/teacher3.jpg",
+  },
+  {
+    id: 4,
+    name: "Mr. Nirbhay Sahani",
+    subject: "Hindi / General Knowledge",
+    qualification: "B.A [Hindi] , BTC",
+    image: "/Images/teacher4.jpg",
   },
 ];
 

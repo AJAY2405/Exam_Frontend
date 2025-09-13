@@ -1,12 +1,18 @@
 import React from "react";
-import { FaLinkedin, FaYoutube, FaTwitter } from "react-icons/fa";
+import {
+  FaLinkedin,
+  FaYoutube,
+  FaTwitter,
+  FaInstagram,
+  FaWhatsapp,
+  FaEnvelope,
+} from "react-icons/fa";
 
 function Footer() {
   return (
     <footer className="bg-[#FAF6F2] text-gray-800 mt-10">
       <div className="max-w-4xl mx-auto px-6 py-10 rounded-2xl shadow-md">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          
           {/* School Logo & Name */}
           <div className="flex flex-col items-center sm:items-start">
             <img
@@ -23,7 +29,9 @@ function Footer() {
           {/* Social Links */}
           <div className="flex flex-col items-center sm:items-start">
             <h3 className="text-lg font-semibold mb-3">Connect with Us</h3>
-            <div className="flex space-x-5 text-2xl text-gray-700">
+            
+            {/* First Row */}
+            <div className="flex space-x-5 text-2xl text-gray-700 mb-3">
               <a
                 href="https://www.linkedin.com"
                 target="_blank"
@@ -47,6 +55,34 @@ function Footer() {
                 className="hover:text-sky-500 transition"
               >
                 <FaTwitter />
+              </a>
+            </div>
+
+            {/* Second Row */}
+            <div className="flex space-x-5 text-2xl text-gray-700">
+              <a
+                href="https://wa.me/919876543210"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-green-500 transition"
+              >
+                <FaWhatsapp />
+              </a>
+              <a
+                href="https://www.instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-pink-500 transition"
+              >
+                <FaInstagram />
+              </a>
+              <a
+                href="mailto:academy@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-red-500 transition"
+              >
+                <FaEnvelope />
               </a>
             </div>
           </div>

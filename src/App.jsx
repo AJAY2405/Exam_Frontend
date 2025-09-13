@@ -1,5 +1,9 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -26,28 +30,91 @@ import Layout from "./components/shared/Layout";
 import TeacherTestResults from "./components/Teacher/TeacherTestResults";
 import UploadNote from "./components/Notes/UploadNote";
 import NotesList from "./components/Notes/NotesList";
+import ClassList from "./components/Class/ClassList";
+import StudentList from "./components/Class/StudentList";
+import TeacherRoute from "./components/shared/TeacherRoute";
+import Notices from "./components/Notice/Notices";
+import CreateNotice from "./components/Notice/CreateNotice";
 
 const appRouter = createBrowserRouter([
   {
-    element: <Layout />, // Navbar wrapper
+    element: <Layout />,
     children: [
       { path: "/", element: <Home /> },
       { path: "/about", element: <About /> },
       { path: "/profile", element: <Profile /> },
 
-      // Student routes
+      // ✅ Student routes
       { path: "/test", element: <StudentPages /> },
-      // { path: "/test", element: <div className="p-4">Please select a test to start.</div> },
       { path: "/student/tests/:id", element: <TakeTest /> },
+      { path: "/notices", element: <Notices/> },
 
-      // Teacher routes
-      // { path: "/teacher", element: <TeacherPage /> },
-      { path: "/teacher/create-test", element: <CreateTest /> },
-      { path: "/teacher/results", element: <TeacherTestResults /> },
-       // Notes (⚡ no protection)
-      { path: "/notes/upload", element: <UploadNote /> },
-      { path: "/notes", element: <NotesList /> },
-    ]
+      // ✅ Teacher-only routes
+      {
+        path: "/teacher/create-test",
+        element: (
+          <TeacherRoute>
+            <CreateTest />
+          </TeacherRoute>
+        ),
+      },
+      {
+        path: "/teacher/results",
+        element: (
+          <TeacherRoute>
+            <TeacherTestResults />
+          </TeacherRoute>
+        ),
+      },
+
+      // ✅ Notes (Teacher only)
+      {
+        path: "/notes/upload",
+        element: (
+          <TeacherRoute>
+            <UploadNote />
+          </TeacherRoute>
+        ),
+      },
+      {
+        path: "/notes",
+        element: <NotesList />,
+      },
+
+      // ✅ Class management (Teacher only)
+      {
+        path: "/classes",
+        element: (
+          <TeacherRoute>
+            <ClassList />
+          </TeacherRoute>
+        ),
+      },
+      {
+        path: "/classes/create",
+        element: (
+          <TeacherRoute>
+            <ClassList />
+          </TeacherRoute>
+        ),
+      },
+      {
+        path: "/classes/:id",
+        element: (
+          <TeacherRoute>
+            <StudentList />
+          </TeacherRoute>
+        ),
+      },
+      {
+        path: "/create-notice",
+        element: (
+          <TeacherRoute>
+            <CreateNotice />
+          </TeacherRoute>
+        ),
+      },
+    ],
   },
 
   // Auth routes
@@ -57,7 +124,6 @@ const appRouter = createBrowserRouter([
   // Redirect unknown routes
   { path: "*", element: <Navigate to="/" replace /> },
 ]);
-
 function App() {
   return (
     <>

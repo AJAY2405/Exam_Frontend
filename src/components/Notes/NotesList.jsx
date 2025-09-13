@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { NOTES_API_END_POINT } from "../../utils/constants";
-import { FileText, Download, User } from "lucide-react"; // ✅ nice icons
+import { BookOpen, FileText, ExternalLink, Search } from "lucide-react";
 
 const NotesList = () => {
   const [notes, setNotes] = useState([]);
+  const [filteredNotes, setFilteredNotes] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -15,13 +17,15 @@ const NotesList = () => {
           withCredentials: true,
         });
 
+        let notesData = [];
         if (Array.isArray(res.data)) {
-          setNotes(res.data);
+          notesData = res.data;
         } else if (Array.isArray(res.data.notes)) {
-          setNotes(res.data.notes);
-        } else {
-          setNotes([]);
+          notesData = res.data.notes;
         }
+
+        setNotes(notesData);
+        setFilteredNotes(notesData);
       } catch (err) {
         setError("⚠️ Failed to load notes");
       } finally {
@@ -31,6 +35,13 @@ const NotesList = () => {
 
     fetchNotes();
   }, []);
+
+  useEffect(() => {
+    const filtered = notes.filter((note) =>
+      note.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredNotes(filtered);
+  }, [searchTerm, notes]);
 
   if (loading) {
     return (
@@ -50,39 +61,53 @@ const NotesList = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 px-6 py-10 mt-10">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-6">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-          <FileText className="w-7 h-7 text-blue-600" /> Available Notes
-        </h2>
+      {/* Search Box */}
+      <div className="max-w-5xl mx-auto mb-6">
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search notes by title..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full border border-gray-300 rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <Search className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
+        </div>
+      </div>
 
-        {notes.length === 0 ? (
-          <p className="text-gray-500 text-center">No notes available yet.</p>
+      <div className="max-w-5xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {filteredNotes.length === 0 ? (
+          <p className="text-gray-500 text-center col-span-full">
+            No notes found.
+          </p>
         ) : (
-          <ul className="grid gap-4 md:grid-cols-2">
-            {notes.map((note) => (
-              <li
-                key={note._id}
-                className="border border-gray-200 rounded-xl shadow-sm bg-gray-50 p-4 flex flex-col justify-between hover:shadow-md transition"
+          filteredNotes.map((note) => (
+            <div
+              key={note._id}
+              className="bg-white rounded-2xl shadow-md p-5 flex flex-col justify-between border hover:shadow-lg transition"
+            >
+              {/* Note Title */}
+              <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-2">
+                <BookOpen className="w-5 h-5 text-blue-600" /> {note.title}
+              </h3>
+
+              {/* Optional uploader or subtitle */}
+              <p className="text-gray-600 text-sm flex items-center gap-2 mb-4">
+                <FileText className="w-4 h-4 text-gray-500" />{" "}
+                {note.uploadedBy?.fullname || "Shared Note"}
+              </p>
+
+              {/* Open PDF button */}
+              <a
+                href={note.pdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg shadow hover:from-blue-600 hover:to-purple-700 transition"
               >
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  {note.title}
-                </h3>
-                <p className="text-sm text-gray-600 mb-3 flex items-center gap-2">
-                  <User className="w-4 h-4 text-gray-500" />
-                  {note.uploadedBy?.fullname || "Unknown"}
-                </p>
-                <a
-                  href={note.pdfUrl}
-                  target="_blank" // open in new tab
-                  rel="noopener noreferrer"
-                  download // force browser to download instead of just viewing
-                  className="flex items-center justify-center gap-2 w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
-                >
-                  <Download className="w-4 h-4" /> Download PDF
-                </a>
-              </li>
-            ))}
-          </ul>
+                <ExternalLink className="w-4 h-4" /> Open Note
+              </a>
+            </div>
+          ))
         )}
       </div>
     </div>

@@ -297,6 +297,15 @@ const Navbar = () => {
                   Read Notes
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/notices"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-200 hover:bg-[#FCD9B8] hover:text-white"
+                >
+                 Notice
+                </Link>
+              </li>
             </>
           )}
 
@@ -322,6 +331,15 @@ const Navbar = () => {
               </li>
               <li>
                 <Link
+                  to="/classes"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-200 hover:bg-[#FCD9B8] hover:text-white"
+                >
+                  Classes
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/notes/upload"
                   onClick={() => setIsOpen(false)}
                   className="flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-200 hover:bg-[#FCD9B8] hover:text-white"
@@ -329,6 +347,16 @@ const Navbar = () => {
                   Upload Notes
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/create-notice"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-200 hover:bg-[#FCD9B8] hover:text-white"
+                >
+                  New Notice
+                </Link>
+              </li>
+              
             </>
           )}
 

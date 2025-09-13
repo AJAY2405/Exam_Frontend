@@ -2,20 +2,34 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { STUDENT_API_END_POINT } from "../../utils/constants";
-import { BookOpen, FileText, PlayCircle, AlertCircle } from "lucide-react";
+import { BookOpen, FileText, PlayCircle, AlertCircle, Search } from "lucide-react";
 
 export default function StudentPage() {
   const [tests, setTests] = useState([]);
+  const [filteredTests, setFilteredTests] = useState([]); // ✅ Added state for filtered tests
+  const [searchTerm, setSearchTerm] = useState("");        // ✅ Added state for search term
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
 
+  // ✅ Fetch tests from API and initialize both tests and filteredTests
   useEffect(() => {
     axios
       .get(STUDENT_API_END_POINT, { withCredentials: true })
-      .then((res) => setTests(res.data))
+      .then((res) => {
+        setTests(res.data);
+        setFilteredTests(res.data); // Initialize filteredTests with the fetched data
+      })
       .catch((e) => setErr(e?.response?.data?.message || e.message))
       .finally(() => setLoading(false));
   }, []);
+
+  // ✅ Filter tests based on the search term whenever it changes
+  useEffect(() => {
+    const filtered = tests.filter((test) =>
+      test.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredTests(filtered);
+  }, [searchTerm, tests]);
 
   if (loading)
     return (
@@ -44,18 +58,32 @@ export default function StudentPage() {
         </p>
       </div>
 
-      {/* No Tests */}
-      {tests.length === 0 && (
+      {/* ✅ Search Box */}
+      <div className="max-w-6xl mx-auto mb-6 px-6">
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search tests by title..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full border border-gray-300 rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <Search className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
+        </div>
+      </div>
+
+      {/* No Tests or No Matches */}
+      {filteredTests.length === 0 && (
         <div className="text-center text-gray-500 py-12">
           <BookOpen className="mx-auto w-12 h-12 text-gray-400 mb-3" />
-          <p className="text-lg font-medium">No tests available right now.</p>
-          <p className="text-sm">Please check back later 🚀</p>
+          <p className="text-lg font-medium">No tests found matching your search.</p>
+          <p className="text-sm">Try different keywords 🔍</p>
         </div>
       )}
 
       {/* Tests Grid */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {tests.map((t) => (
+        {filteredTests.map((t) => (
           <div
             key={t._id}
             className="bg-white shadow-lg rounded-2xl p-6 border border-gray-100 hover:shadow-2xl hover:scale-[1.02] transition-transform duration-300 flex flex-col"

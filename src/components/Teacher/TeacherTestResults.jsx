@@ -6,6 +6,11 @@ const TeacherTestResults = () => {
   const [tests, setTests] = useState([]);
   const [selectedTest, setSelectedTest] = useState(null);
   const [submissions, setSubmissions] = useState([]);
+  const [filteredSubmissions, setFilteredSubmissions] = useState([]);
+
+  // filters
+  const [timeFilter, setTimeFilter] = useState("");
+  const [percentageFilter, setPercentageFilter] = useState("");
 
   useEffect(() => {
     fetchTests();
@@ -29,11 +34,78 @@ const TeacherTestResults = () => {
         { withCredentials: true }
       );
       setSubmissions(res.data.results || []);
+      setFilteredSubmissions(res.data.results || []);
       setSelectedTest(testId);
     } catch (err) {
       console.error("Error fetching submissions", err);
       setSubmissions([]);
+      setFilteredSubmissions([]);
     }
+  };
+
+  // filter logic
+  useEffect(() => {
+    let data = [...submissions];
+
+    // ✅ Time filter
+    if (timeFilter) {
+      const now = new Date();
+      let cutoff = new Date();
+
+      switch (timeFilter) {
+        case "30min":
+          cutoff = new Date(now.getTime() - 30 * 60 * 1000);
+          break;
+        case "1h":
+          cutoff = new Date(now.getTime() - 1 * 60 * 60 * 1000);
+          break;
+        case "2h":
+          cutoff = new Date(now.getTime() - 2 * 60 * 60 * 1000);
+          break;
+        case "5h":
+          cutoff = new Date(now.getTime() - 5 * 60 * 60 * 1000);
+          break;
+        case "1d":
+          cutoff = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+          break;
+        case "2d":
+          cutoff = new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000);
+          break;
+        case "5d":
+          cutoff = new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000);
+          break;
+        default:
+          cutoff = null;
+      }
+
+      if (cutoff) {
+        data = data.filter(
+          (s) => new Date(s.submittedAt) >= cutoff
+        );
+      }
+    }
+
+    // ✅ Percentage filter
+    if (percentageFilter) {
+      const threshold = parseInt(percentageFilter, 10);
+      data = data.filter((s) => s.percentage >= threshold);
+    }
+
+    setFilteredSubmissions(data);
+  }, [timeFilter, percentageFilter, submissions]);
+
+  const formatDateTime = (dateString) => {
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+    const formattedTime = date.toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    return `${formattedDate} at ${formattedTime}`;
   };
 
   return (
@@ -75,6 +147,9 @@ const TeacherTestResults = () => {
             onClick={() => {
               setSelectedTest(null);
               setSubmissions([]);
+              setFilteredSubmissions([]);
+              setTimeFilter("");
+              setPercentageFilter("");
             }}
           >
             ← Back to Tests
@@ -84,61 +159,90 @@ const TeacherTestResults = () => {
             Submissions
           </h2>
 
-          {submissions && submissions.length === 0 ? (
-            <p className="text-gray-500 italic">No submissions yet.</p>
+          {/* 🔽 Filters */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-6">
+            <select
+              value={timeFilter}
+              onChange={(e) => setTimeFilter(e.target.value)}
+              className="border px-3 py-2 rounded-lg"
+            >
+              <option value="">Filter by Time</option>
+              <option value="30min">Last 30 Minutes</option>
+              <option value="1h">Last 1 Hour</option>
+              <option value="2h">Last 2 Hours</option>
+              <option value="5h">Last 5 Hours</option>
+              <option value="1d">Last 1 Day</option>
+              <option value="2d">Last 2 Days</option>
+              <option value="5d">Last 5 Days</option>
+            </select>
+
+            <select
+              value={percentageFilter}
+              onChange={(e) => setPercentageFilter(e.target.value)}
+              className="border px-3 py-2 rounded-lg"
+            >
+              <option value="">Filter by Percentage</option>
+              <option value="40">≥ 40%</option>
+              <option value="50">≥ 50%</option>
+              <option value="60">≥ 60%</option>
+              <option value="70">≥ 70%</option>
+              <option value="75">≥ 75%</option>
+              <option value="80">≥ 80%</option>
+            </select>
+          </div>
+
+          {filteredSubmissions && filteredSubmissions.length === 0 ? (
+            <p className="text-gray-500 italic">No submissions match filters.</p>
           ) : (
-            submissions &&
-            submissions.length > 0 && (
-              <div className="overflow-x-auto rounded-lg shadow">
-                <table className="w-full border-collapse bg-white rounded-lg overflow-hidden text-sm sm:text-base">
-                  <thead className="bg-gray-100">
-                    <tr>
-                      <th className="border px-3 sm:px-4 py-2 sm:py-3 text-left">
-                        Student Name
-                      </th>
-                      <th className="border px-3 sm:px-4 py-2 sm:py-3 text-left">
-                        Email
-                      </th>
-                      <th className="border px-3 sm:px-4 py-2 sm:py-3 text-center">
-                        Score
-                      </th>
-                      <th className="border px-3 sm:px-4 py-2 sm:py-3 text-center">
-                        Percentage
-                      </th>
-                      <th className="border px-3 sm:px-4 py-2 sm:py-3 text-center">
-                        Submitted At
-                      </th>
+            <div className="overflow-x-auto rounded-lg shadow">
+              <table className="w-full border-collapse bg-white rounded-lg overflow-hidden text-sm sm:text-base">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="border px-3 sm:px-4 py-2 sm:py-3 text-left">
+                      Student Name
+                    </th>
+                    <th className="border px-3 sm:px-4 py-2 sm:py-3 text-left">
+                      Email
+                    </th>
+                    <th className="border px-3 sm:px-4 py-2 sm:py-3 text-center">
+                      Score
+                    </th>
+                    <th className="border px-3 sm:px-4 py-2 sm:py-3 text-center">
+                      Percentage
+                    </th>
+                    <th className="border px-3 sm:px-4 py-2 sm:py-3 text-center">
+                      Submitted At
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredSubmissions.map((s, index) => (
+                    <tr
+                      key={s._id}
+                      className={`${
+                        index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                      } hover:bg-blue-50 transition`}
+                    >
+                      <td className="border px-3 sm:px-4 py-2">
+                        {s.studentName}
+                      </td>
+                      <td className="border px-3 sm:px-4 py-2">
+                        <span className="break-all">{s.studentEmail}</span>
+                      </td>
+                      <td className="border px-3 sm:px-4 py-2 text-center font-semibold text-blue-600">
+                        {s.score}
+                      </td>
+                      <td className="border px-3 sm:px-4 py-2 text-center">
+                        {s.percentage}%
+                      </td>
+                      <td className="border px-3 sm:px-4 py-2 text-center text-gray-600">
+                        {formatDateTime(s.submittedAt)}
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {submissions.map((s, index) => (
-                      <tr
-                        key={s._id}
-                        className={`${
-                          index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                        } hover:bg-blue-50 transition`}
-                      >
-                        <td className="border px-3 sm:px-4 py-2">
-                          {s.studentName}
-                        </td>
-                        <td className="border px-3 sm:px-4 py-2">
-                          <span className="break-all">{s.studentEmail}</span>
-                        </td>
-                        <td className="border px-3 sm:px-4 py-2 text-center font-semibold text-blue-600">
-                          {s.score}
-                        </td>
-                        <td className="border px-3 sm:px-4 py-2 text-center">
-                          {s.percentage}%
-                        </td>
-                        <td className="border px-3 sm:px-4 py-2 text-center text-gray-600">
-                          {new Date(s.submittedAt).toLocaleString()}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       )}
