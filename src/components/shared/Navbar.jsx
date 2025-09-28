@@ -62,7 +62,7 @@ const Navbar = () => {
           <img
             src="/Images/logo.png"
             alt="Logo"
-            className="h-[70px] select-none"
+            className="h-[100px] select-none"
           />
         </div>
 
