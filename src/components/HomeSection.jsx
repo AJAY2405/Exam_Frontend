@@ -37,14 +37,14 @@ const achievers = [
     name: "Priya Singh",
     achievement: "CHS Topper 2024",
     qualification: "96%",
-    image: "hi",
+    image: "https://res.cloudinary.com/dfxr85udp/image/upload/v1754565530/j52z8lnpbcdh00xffq6c.jpg",
   },
   {
     id: 6,
     name: "Anup Sahanai",
     achievement: "JNV Selection",
     qualification: "Selected Student",
-    image: "hi",
+    image: "https://res.cloudinary.com/dfxr85udp/image/upload/v1754565530/j52z8lnpbcdh00xffq6c.jpg",
   },
 ];
 
