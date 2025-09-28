@@ -9,7 +9,7 @@ function About() {
           <img
             src="/Images/logo.png"
             alt="Institute Logo"
-            className="h-20 w-auto mb-4 select-none"
+            className="w-35 h-auto mb-4 select-none"
           />
           <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800">
             About Our Institute
