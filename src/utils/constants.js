@@ -9,8 +9,8 @@
 
 
 
-// const BASE_URL = import.meta.env.VITE_BASE_URL;
-const BASE_URL = "https://exam-backend-orix.onrender.com";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+// const BASE_URL = "https://exam-backend-orix.onrender.com";
 
 export const USER_API_END_POINT = `${BASE_URL}/api/v1/user`;
 export const TEST_API_END_POINT = `${BASE_URL}/api/v1/tests`;
