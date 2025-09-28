@@ -33,7 +33,7 @@ function Footer() {
             {/* First Row */}
             <div className="flex space-x-5 text-2xl text-gray-700 mb-3">
               <a
-                href="https://www.linkedin.com"
+                href="https://www.linkedin.com/in/ajay-sahani-464a38298/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-blue-600 transition"

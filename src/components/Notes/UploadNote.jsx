@@ -53,12 +53,9 @@ const UploadNote = () => {
 
           <button
             type="submit"
-            className="relative w-full py-3 bg-transparent border border-green-600 text-green-600 rounded-lg font-semibold overflow-hidden group"
+            className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-3 bg-green-600 text-white rounded-lg font-semibold transition-all duration-300 ease-in-out hover:bg-green-500 active:bg-green-800"
           >
-            <span className="absolute inset-0 bg-green-600 translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-out"></span>
-            <span className="relative z-10 group-hover:text-white">
-              Upload PDF
-            </span>
+            Upload PDF
           </button>
         </form>
       </div>
