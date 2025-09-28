@@ -37,14 +37,16 @@ const achievers = [
     name: "Priya Singh",
     achievement: "CHS Topper 2024",
     qualification: "96%",
-    image: "https://res.cloudinary.com/dfxr85udp/image/upload/v1754565530/j52z8lnpbcdh00xffq6c.jpg",
+    image:
+      "https://res.cloudinary.com/dfxr85udp/image/upload/v1754565530/j52z8lnpbcdh00xffq6c.jpg",
   },
   {
     id: 6,
     name: "Anup Sahanai",
     achievement: "JNV Selection",
     qualification: "Selected Student",
-    image: "https://res.cloudinary.com/dfxr85udp/image/upload/v1754565530/j52z8lnpbcdh00xffq6c.jpg",
+    image:
+      "https://res.cloudinary.com/dfxr85udp/image/upload/v1754565530/j52z8lnpbcdh00xffq6c.jpg",
   },
 ];
 
@@ -53,14 +55,19 @@ function HomeSection() {
     <div className="min-h-screen w-full bg-gradient-to-b from-white to-blue-50 px-4 sm:px-6 md:px-8 py-8 space-y-16">
       {/* Hero Section */}
       <section className="text-center space-y-4 px-2">
-        <h1
-          className="font-bold text-blue-700 leading-snug text-center 
-             text-xl xs:text-2xl sm:text-3xl md:text-4xl 
-             break-words whitespace-normal mt-8"
-        >
-          🏫 Mangaldeep <br className="block sm:hidden" /> Academy
-        </h1>
+        {/* Logo */}
+        <div className="flex justify-center mt-6">
+          <img
+            src="/Images/logo.png" // Replace with your logo path
+            alt="Mangaldeep Academy Logo"
+            className="w-35 sm:w-32 md:w-40 object-contain"
+          />
+        </div>
 
+        {/* Heading */}
+        
+
+        {/* Description */}
         <p className="max-w-3xl mx-auto text-gray-600 text-base sm:text-lg md:text-xl">
           We prepare students for CHS, UP Board, CBSE, Bihar Board, and JNV with
           dedicated guidance, expert faculty, and modern teaching methods.
