@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { NOTES_API_END_POINT } from "../../utils/constants";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
+// import toast from "react-hot-toast";
+
 
 const UploadNote = () => {
   const [title, setTitle] = useState("");
