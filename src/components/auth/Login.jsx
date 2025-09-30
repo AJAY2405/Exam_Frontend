@@ -59,14 +59,7 @@ const Login = () => {
         {/* Left Section */}
         <div className="flex-1 flex flex-col justify-center p-8 md:p-12">
           <h2 className="text-[#080808] text-3xl font-bold">
-            L
-            <Typewriter
-              words={["ogin Account"]}
-              loop={true}
-              typeSpeed={150}
-              deleteSpeed={100}
-              delaySpeed={1500}
-            />
+            Login Account
           </h2>{" "}
           <form onSubmit={submitHandler} className="space-y-4">
             <div>
@@ -110,7 +103,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="relative w-full py-3 bg-transparent border border-[#FCD9B8] text-[#FCD9B8] rounded-full font-semibold overflow-hidden group disabled:opacity-50"
+              className="relative w-full py-3 bg-transparent border border-[#b89b80] text-[#c07b3b] rounded-full font-semibold overflow-hidden group disabled:opacity-50"
             >
               {/* background animation */}
               <span className="absolute inset-0 bg-[#e48d3c] translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-out"></span>
@@ -152,3 +145,16 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
+
+
+
+
+
+
+
+
+
+

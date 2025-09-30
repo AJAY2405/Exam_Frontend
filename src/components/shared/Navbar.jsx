@@ -70,17 +70,11 @@ const Navbar = () => {
         <ul className="flex flex-col gap-4 p-4 font-medium text-lg md:text-xl mt-16">
           {user && (
             <h2 className="text-[#232324] text-1.5xl md:text-3xl font-bold flex items-center gap-2 mb-5">
-              <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-900 via-purple-900 to-green-900 bg-clip-text text-transparent">
                 {user?.fullname && (
                   <>
-                    {user?.fullname[0]}
-                    <Typewriter
-                      words={[user?.fullname.slice(1)]}
-                      loop
-                      typeSpeed={150}
-                      deleteSpeed={100}
-                      delaySpeed={1500}
-                    />
+                    {user?.fullname}
+                    
                   </>
                 )}
               </span>
