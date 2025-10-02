@@ -61,7 +61,7 @@ function Footer() {
             {/* Second Row */}
             <div className="flex space-x-5 text-2xl text-gray-700">
               <a
-                href="https://wa.me/919876543210"
+                href="https://wa.me/919569559316"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-green-500 transition"
@@ -90,7 +90,7 @@ function Footer() {
           {/* Contact Info */}
           <div className="flex flex-col items-center sm:items-start">
             <h3 className="text-lg font-semibold mb-3">Contact</h3>
-            <p className="text-gray-700">📞 +91 98765 43210</p>
+            <p className="text-gray-700">📞 +91 9569559316</p>
           </div>
         </div>
 
