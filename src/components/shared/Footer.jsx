@@ -90,7 +90,7 @@ function Footer() {
           {/* Contact Info */}
           <div className="flex flex-col items-center sm:items-start">
             <h3 className="text-lg font-semibold mb-3">Contact</h3>
-            <p className="text-gray-700">📞 +91 9569559316</p>
+            <p className="text-gray-700">📞 +919569559316</p>
           </div>
         </div>
 
