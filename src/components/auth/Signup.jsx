@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { setLoading } from "../../redux/authSlice"; // adjust path
 import { USER_API_END_POINT } from "../../utils/constants"; // adjust path
 import { Typewriter } from "react-simple-typewriter";
+import { Eye, EyeOff } from "lucide-react";
+
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -16,7 +18,7 @@ const Signup = () => {
     // role: "",
     file: "",
   });
-
+const [showPassword, setShowPassword] = useState(false);
   const { loading, user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -100,16 +102,25 @@ const Signup = () => {
               />
             </div>
 
-            <div>
+             <div>
               <label className="block text-gray-600 mb-1">Password</label>
-              <input
-                type="password"
-                value={input.password}
-                name="password"
-                onChange={changeEventHandler}
-                placeholder="Enter your password"
-                className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-peach-300 text-black"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={input.password}
+                  onChange={changeEventHandler}
+                  placeholder="Enter your password"
+                  className="w-full border border-gray-300 rounded-full px-4 py-2 pr-12 focus:outline-none focus:ring-2 focus:ring-[#FCD9B8] text-black"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
             </div>
 
             {/* <div>
