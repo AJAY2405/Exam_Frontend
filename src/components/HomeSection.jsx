@@ -13,13 +13,13 @@ const teachers = [
     name: "Mr. Ramkaran Sahani",
     subject: "Physics / Social Science",
     qualification: "M.Sc",
-    image: "/Images/teacher2.jpg",
+    image: "/Images",
   },
   {
     id: 3,
-    name: "Mr. Raj Sahani",
-    subject: "Science / Hindi",
-    qualification: "B.A , M.A  Politechnic [civil]",
+    name: "Mr. Ajay Sahani",
+    subject: "Science / Math / Computer",
+    qualification: "B.Tech Computer Science[AI&ML]",
     image: "/Images/teacher3.jpg",
   },
   {
@@ -88,7 +88,7 @@ function HomeSection() {
               <img
                 src={teacher.image}
                 alt={teacher.name}
-                className="w-24 h-24 sm:w-28 sm:h-28 object-cover rounded-full mx-auto mb-4 border-4 border-blue-500"
+                className="w-26 h-30 sm:w-28 sm:h-28 object-cover rounded-full mx-auto mb-4 border-4 border-blue-500"
               />
               <h3 className="text-lg sm:text-xl font-semibold text-gray-800">
                 {teacher.name}
