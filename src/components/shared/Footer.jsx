@@ -49,7 +49,7 @@ function Footer() {
                 <FaYoutube />
               </a>
               <a
-                href="https://twitter.com"
+                href="https://x.com/AJAYSAHANI97389"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-sky-500 transition"
