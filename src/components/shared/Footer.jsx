@@ -29,7 +29,7 @@ function Footer() {
           {/* Social Links */}
           <div className="flex flex-col items-center sm:items-start">
             <h3 className="text-lg font-semibold mb-3">Connect with Us</h3>
-            
+
             {/* First Row */}
             <div className="flex space-x-5 text-2xl text-gray-700 mb-3">
               <a
@@ -77,7 +77,7 @@ function Footer() {
                 <FaInstagram />
               </a>
               <a
-                href="mailto:academy@gmail.com"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=rahul372602@gmail.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-red-500 transition"

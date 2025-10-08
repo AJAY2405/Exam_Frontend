@@ -274,14 +274,14 @@ function CreateTest() {
 
         <button 
           type="button" 
-          className="bg-gray-500 text-white p-2 rounded mr-2" 
+          className="bg-yellow-600 text-white p-2 rounded mr-2 hover:bg-amber-500" 
           onClick={addQuestion}
         >
           Add Question
         </button>
         <button 
           type="submit" 
-          className="bg-blue-500 text-white p-2 rounded"
+          className="bg-green-600 text-white p-2 rounded hover:bg-green-500"
         >
           Save Test
         </button>
