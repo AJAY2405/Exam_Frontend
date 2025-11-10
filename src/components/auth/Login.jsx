@@ -113,14 +113,15 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="relative w-full py-3 bg-transparent border border-[#b89b80] text-[#c07b3b] rounded-full font-semibold overflow-hidden group disabled:opacity-50"
+              className="relative w-full py-3 bg-transparent border border-[#b89b80] text-[#000] rounded-full font-semibold overflow-hidden group disabled:opacity-50"
             >
               {/* background animation */}
               <span className="absolute inset-0 bg-[#e48d3c] translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-out"></span>
 
               {/* button text */}
               <span className="relative z-10 group-hover:text-white">
-                {loading ? "Logging In..." : "Login"}
+                {/* {loading ? "Logging In..." : "Login"} */}
+                Login
               </span>
             </button>
           </form>

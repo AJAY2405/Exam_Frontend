@@ -147,7 +147,8 @@ const [showPassword, setShowPassword] = useState(false);
 
               {/* button text */}
               <span className="relative z-10 group-hover:text-white">
-                {loading ? "Signing Up..." : "Sign Up"}
+                {/* {loading ? "Signing Up..." : "Sign Up"} */}
+               Signup
               </span>
             </button>
           </form>
