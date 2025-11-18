@@ -10,10 +10,10 @@ const teachers = [
   },
   {
     id: 2,
-    name: "Mr. Ramkaran Sahani",
+    name: "Mr. Akash Sahani",
     subject: "Physics / Social Science",
     qualification: "M.Sc",
-    image: "/Images",
+    image: "/Images/teacher2.jpg",
   },
   {
     id: 3,
@@ -34,17 +34,17 @@ const teachers = [
 const achievers = [
   {
     id: 1,
-    name: "Priya Singh",
-    achievement: "CHS Topper 2024",
+    name: "XYZ Singh",
+    achievement: "10th Topper 2024",
     qualification: "96%",
     image:
       "https://res.cloudinary.com/dfxr85udp/image/upload/v1754565530/j52z8lnpbcdh00xffq6c.jpg",
   },
   {
     id: 6,
-    name: "Anup Sahanai",
-    achievement: "JNV Selection",
-    qualification: "Selected Student",
+    name: "XYZ Sahani",
+    achievement: "12th Selection",
+    qualification: "92%",
     image:
       "https://res.cloudinary.com/dfxr85udp/image/upload/v1754565530/j52z8lnpbcdh00xffq6c.jpg",
   },
