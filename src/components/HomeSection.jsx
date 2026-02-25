@@ -8,13 +8,13 @@ const teachers = [
     qualification: "B.Sc , M.Sc",
     image: "/Images/teacher1.jpg",
   },
-  {
-    id: 2,
-    name: "Mr. Akash Sahani",
-    subject: "Physics / Social Science",
-    qualification: "M.Sc",
-    image: "/Images/teacher2.jpg",
-  },
+  // {
+  //   id: 2,
+  //   name: "Mr. Akash Sahani",
+  //   subject: "Physics / Social Science",
+  //   qualification: "M.Sc",
+  //   image: "/Images/teacher2.jpg",
+  // },
   {
     id: 3,
     name: "Mr. Ajay Sahani",
