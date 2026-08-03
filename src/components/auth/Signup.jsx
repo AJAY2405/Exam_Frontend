@@ -139,10 +139,9 @@ const Signup = () => {
 
             <button
   type="submit"
-  disabled={loading}
-  className="w-full py-3 rounded-full border border-[#E48D3C] text-[#E48D3C] font-medium transition-all duration-300 hover:bg-[#E48D3C] hover:text-white hover:shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+  className="w-full py-3 rounded-full bg-[#E48D3C] text-white font-semibold hover:bg-[#D97706]"
 >
-  {loading ? "Signing Up..." : "Sign Up"}
+  Sign Up
 </button>
           </form>
           <p className="text-center text-sm mt-6 text-gray-500">

@@ -112,10 +112,9 @@ const Login = () => {
 
            <button
   type="submit"
-  disabled={loading}
-  className="w-full py-3 border border-[#F4A261] text-[#F4A261] rounded-full font-semibold transition-all duration-300 hover:bg-[#F4A261] hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+  className="w-full py-3 rounded-full bg-[#E48D3C] text-white font-semibold hover:bg-[#D97706]"
 >
-  {loading ? "Logging In..." : "Login"}
+  Login
 </button>
           </form>
           {/* Divider */}
