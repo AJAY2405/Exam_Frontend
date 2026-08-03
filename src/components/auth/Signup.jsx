@@ -138,19 +138,12 @@ const Signup = () => {
             </div> */}
 
             <button
-              type="submit"
-              disabled={loading}
-              className="relative w-full py-3 bg-transparent border border-[#e1c9b2] text-[#e2772b] rounded-full font-semibold overflow-hidden group disabled:opacity-50"
-            >
-              {/* background animation */}
-              <span className="absolute inset-0 bg-[#dc893b] translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-out"></span>
-
-              {/* button text */}
-              <span className="relative z-10 group-hover:text-white">
-                {/* {loading ? "Signing Up..." : "Sign Up"} */}
-               Signup
-              </span>
-            </button>
+  type="submit"
+  disabled={loading}
+  className="w-full py-3 rounded-full border border-[#E48D3C] text-[#E48D3C] font-medium transition-all duration-300 hover:bg-[#E48D3C] hover:text-white hover:shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  {loading ? "Signing Up..." : "Sign Up"}
+</button>
           </form>
           <p className="text-center text-sm mt-6 text-gray-500">
             Already have an account?{" "}

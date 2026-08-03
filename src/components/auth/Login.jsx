@@ -110,20 +110,13 @@ const Login = () => {
               </select>
             </div>  */}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="relative w-full py-3 bg-transparent border border-[#b89b80] text-[#000] rounded-full font-semibold overflow-hidden group disabled:opacity-50"
-            >
-              {/* background animation */}
-              <span className="absolute inset-0 bg-[#e48d3c] translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-out"></span>
-
-              {/* button text */}
-              <span className="relative z-10 group-hover:text-white">
-                {/* {loading ? "Logging In..." : "Login"} */}
-                Login
-              </span>
-            </button>
+           <button
+  type="submit"
+  disabled={loading}
+  className="w-full py-3 border border-[#F4A261] text-[#F4A261] rounded-full font-semibold transition-all duration-300 hover:bg-[#F4A261] hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  {loading ? "Logging In..." : "Login"}
+</button>
           </form>
           {/* Divider */}
           <div className="flex items-center my-6">
