@@ -8,13 +8,12 @@ const Home = () => {
     <div className="flex h-screen mt-8">
       
       {/* Sidebar */}
-      <Navbar />
+      {/* <Navbar /> */}
  
       {/* Main Content */}
-      <div className="flex-1 relative overflow-y-auto">
         <HomeSection />
-      </div>
- 
+      
+   
     </div>
   );
 };

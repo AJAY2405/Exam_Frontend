@@ -31,32 +31,7 @@ function Footer() {
             <h3 className="text-lg font-semibold mb-3">Connect with Us</h3>
 
             {/* First Row */}
-            <div className="flex space-x-5 text-2xl text-gray-700 mb-3">
-              <a
-                href="https://www.linkedin.com/in/ajay-sahani-464a38298/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-blue-600 transition"
-              >
-                <FaLinkedin />
-              </a>
-              <a
-                href="https://www.youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-red-600 transition"
-              >
-                <FaYoutube />
-              </a>
-              <a
-                href="https://x.com/AJAYSAHANI97389"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-sky-500 transition"
-              >
-                <FaTwitter />
-              </a>
-            </div>
+            
 
             {/* Second Row */}
             <div className="flex space-x-5 text-2xl text-gray-700">
@@ -88,10 +63,7 @@ function Footer() {
           </div>
 
           {/* Contact Info */}
-          <div className="flex flex-col items-center sm:items-start">
-            <h3 className="text-lg font-semibold mb-3">Contact</h3>
-            <p className="text-gray-700">📞 +919569559316</p>
-          </div>
+          
         </div>
 
         {/* Bottom Bar */}

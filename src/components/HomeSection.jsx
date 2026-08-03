@@ -149,22 +149,6 @@ function HomeSection() {
            Announcements
         </button>
       </section>
-
-      {/* 🔹 Teachers */}
-      {/* <Slider data={teachers} type="teacher" /> */}
-
-      {/* 🔹 Quote */}
-      {/* <section className="bg-orange-100 p-6 rounded-xl text-center">
-        <blockquote className="italic text-black text-xl">
-          “Education is the most powerful weapon which you can use to change the world.”
-          <span className="block mt-2 font-semibold text-orange-500">
-            – Nelson Mandela
-          </span>
-        </blockquote>
-      </section> */}
-
-      {/* 🔹 Achievers */}
-      {/* <Slider data={achievers} type="achiever" /> */}
       <CardSlider/>
       {/* 🔹 Contact */}
       <Contact />
