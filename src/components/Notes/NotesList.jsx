@@ -45,7 +45,7 @@ const NotesList = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen text-gray-600">
+      <div className="flex items-center justify-center min-h-screen text-orange-500 animate-pulse">
         ⏳ Loading notes...
       </div>
     );
@@ -53,15 +53,21 @@ const NotesList = () => {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen text-red-600 font-medium">
+      <div className="flex items-center justify-center min-h-screen text-red-500 font-medium">
         {error}
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 px-6 py-10 mt-10">
-      {/* Search Box */}
+    <div
+      className="min-h-screen 
+      bg-white dark:bg-black 
+      text-black dark:text-white 
+      px-6 py-10 mt-10 
+      transition-colors duration-300"
+    >
+      {/* 🔹 Search */}
       <div className="max-w-5xl mx-auto mb-6">
         <div className="relative">
           <input
@@ -69,42 +75,59 @@ const NotesList = () => {
             placeholder="Search notes by title..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-gray-300 dark:border-gray-600 
+            rounded-lg py-2 pl-10 pr-4 
+            bg-white dark:bg-black 
+            text-black dark:text-white 
+            focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
           <Search className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
         </div>
       </div>
 
+      {/* 🔹 Notes Grid */}
       <div className="max-w-5xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        
         {filteredNotes.length === 0 ? (
-          <p className="text-gray-500 text-center col-span-full">
+          <p className="text-gray-600 dark:text-gray-400 text-center col-span-full">
             No notes found.
           </p>
         ) : (
           filteredNotes.map((note) => (
             <div
               key={note._id}
-              className="bg-white rounded-2xl shadow-md p-5 flex flex-col justify-between border hover:shadow-lg transition"
+              className="bg-orange-100/40 dark:bg-black/60 
+              backdrop-blur-xl 
+              border border-orange-300/40 dark:border-white/10 
+              rounded-2xl shadow-lg p-5 flex flex-col justify-between 
+              hover:shadow-2xl hover:scale-[1.03] 
+              transition-all duration-300"
             >
-              {/* Note Title */}
-              <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-2">
-                <BookOpen className="w-5 h-5 text-blue-600" /> {note.title}
+              {/* Title */}
+              <h3 className="text-xl font-bold text-black dark:text-white flex items-center gap-2 mb-2">
+                <BookOpen className="w-5 h-5 text-orange-500" />
+                {note.title}
               </h3>
 
-              {/* Optional uploader or subtitle */}
-              <p className="text-gray-600 text-sm flex items-center gap-2 mb-4">
-                <FileText className="w-4 h-4 text-gray-500" />{" "}
+              {/* Subtitle */}
+              <p className="text-gray-700 dark:text-gray-300 text-sm flex items-center gap-2 mb-4">
+                <FileText className="w-4 h-4 text-gray-400" />
                 {note.uploadedBy?.fullname || "Shared Note"}
               </p>
 
-              {/* Open PDF button */}
+              {/* Button */}
               <a
                 href={note.pdfUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg shadow hover:from-blue-600 hover:to-purple-700 transition"
+                className="mt-auto inline-flex items-center justify-center gap-2 
+                px-4 py-2 
+                bg-orange-500 hover:bg-orange-600 
+                text-white font-medium rounded-lg shadow 
+                transition"
               >
-                <ExternalLink className="w-4 h-4" /> Open Note
+                <ExternalLink className="w-4 h-4" />
+                Open Note
               </a>
             </div>
           ))

@@ -1,13 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { NOTES_API_END_POINT } from "../../utils/constants";
 import { toast } from "react-toastify";
-// import toast from "react-hot-toast";
-
+import { useSelector } from "react-redux";
 
 const UploadNote = () => {
+  const { user } = useSelector((state) => state.auth);
+
   const [title, setTitle] = useState("");
   const [pdf, setPdf] = useState(null);
+
+  const [notes, setNotes] = useState([]);
+  const [loadingNotes, setLoadingNotes] = useState(true);
+  const [deletingId, setDeletingId] = useState(null);
+
+  const fetchNotes = async () => {
+    try {
+      setLoadingNotes(true);
+      const res = await axios.get(NOTES_API_END_POINT, {
+        withCredentials: true,
+      });
+      setNotes(res.data.notes || []);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to load notes");
+    } finally {
+      setLoadingNotes(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -24,42 +48,128 @@ const UploadNote = () => {
       toast.success("📄 Note uploaded successfully!");
       setTitle("");
       setPdf(null);
+      fetchNotes(); // refresh list after upload
     } catch (error) {
       toast.error(error.response?.data?.message || "❌ Upload failed");
     }
   };
 
+  const handleDelete = async (noteId, noteTitle) => {
+    const confirmed = window.confirm(`Delete "${noteTitle}"? This cannot be undone.`);
+    if (!confirmed) return;
+
+    try {
+      setDeletingId(noteId);
+      await axios.delete(`${NOTES_API_END_POINT}/${noteId}`, {
+        withCredentials: true,
+      });
+      toast.success("Note deleted");
+      setNotes((prev) => prev.filter((n) => n._id !== noteId));
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response?.data?.message || "Failed to delete note");
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
-        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
-          📄 Upload Your Note
-        </h2>
-        <form onSubmit={handleUpload} className="flex flex-col gap-4">
-          <input
-            type="text"
-            placeholder="Enter Note Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
+    <div className="min-h-screen bg-gray-100 px-4 py-10">
+      {/* Upload form */}
+      <div className="flex items-center justify-center">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
+          <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
+            📄 Upload Your Note
+          </h2>
+          <form onSubmit={handleUpload} className="flex flex-col gap-4">
+            <input
+              type="text"
+              placeholder="Enter Note Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
 
-          <input
-            type="file"
-            accept="application/pdf"
-            onChange={(e) => setPdf(e.target.files[0])}
-            required
-            className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 cursor-pointer"
-          />
+            <input
+              type="file"
+              accept="application/pdf"
+              onChange={(e) => setPdf(e.target.files[0])}
+              required
+              className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 cursor-pointer"
+            />
 
-          <button
-            type="submit"
-            className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-3 bg-green-600 text-white rounded-lg font-semibold transition-all duration-300 ease-in-out hover:bg-green-500 active:bg-green-800"
-          >
-            Upload PDF
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-3 bg-green-600 text-white rounded-lg font-semibold transition-all duration-300 ease-in-out hover:bg-green-500 active:bg-green-800"
+            >
+              Upload PDF
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {/* Notes list */}
+      <div className="max-w-3xl mx-auto mt-10">
+        <h3 className="text-xl font-semibold text-gray-800 mb-4">
+          All Uploaded Notes
+        </h3>
+
+        {loadingNotes ? (
+          <p className="text-gray-500">Loading notes...</p>
+        ) : notes.length === 0 ? (
+          <p className="text-gray-500">No notes uploaded yet.</p>
+        ) : (
+          <div className="space-y-3">
+            {notes.map((note) => {
+              const isOwner = note.uploadedBy?._id === user?._id;
+              return (
+                <div
+                  key={note._id}
+                  className="bg-white border rounded-xl p-4 flex justify-between items-center shadow-sm"
+                >
+                  <div>
+                    <h4 className="font-semibold text-gray-800">{note.title}</h4>
+                    <p className="text-sm text-gray-500">
+                      Uploaded by {note.uploadedBy?.name || "Unknown"} ·{" "}
+                      {formatDate(note.createdAt)}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-3 shrink-0">
+                    <a
+                      href={note.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline text-sm"
+                    >
+                      View PDF
+                    </a>
+
+                    {isOwner && (
+                      <button
+                        onClick={() => handleDelete(note._id, note.title)}
+                        disabled={deletingId === note._id}
+                        className="bg-red-600 text-white px-3 py-1.5 rounded text-sm hover:bg-red-500 disabled:opacity-50"
+                      >
+                        {deletingId === note._id ? "Deleting..." : "Delete"}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
