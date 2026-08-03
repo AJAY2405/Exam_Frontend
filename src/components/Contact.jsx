@@ -4,13 +4,14 @@ function Contact() {
   return (
     <div
       id="contacts"
-      className="min-h-screen flex items-center justify-center bg-white px-4"
+      className="min-h-screen flex items-center justify-center bg-[#f9f8f7] px-4"
     >
       <div className="w-full max-w-lg bg-white rounded-2xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-center text-[#E48D3C]">
           Contact Us
         </h1>
 
+       
         <form
           action="https://formsubmit.co/rahul372602@gmail.com"
           method="POST"

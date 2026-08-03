@@ -148,7 +148,7 @@ const SliderRow = ({ data, type, title }) => {
 const CardSlider = () => {
   return (
     <div className="space-y-16">
-      <SliderRow data={teachers} type="teacher" title="Teachers" />
+      <SliderRow data={teachers} type="teacher" title="👩‍🏫 Our Teachers" />
       <section className="bg-orange-100 dark:bg-gray-900 border border-orange-400 dark:border-white/10 p-6 rounded-xl text-center">
         <blockquote className="italic text-black dark:text-gray-200 text-xl">
           “Education is the most powerful weapon which you can use to change the
@@ -158,7 +158,7 @@ const CardSlider = () => {
           </span>
         </blockquote>
       </section>
-      <SliderRow data={achievers} type="achiever" title=" Our Achievers" />
+      <SliderRow data={achievers} type="achiever" title="Our Achievers" />
     </div>
   );
 };
