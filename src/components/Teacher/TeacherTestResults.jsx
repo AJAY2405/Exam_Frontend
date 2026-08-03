@@ -127,12 +127,12 @@ const TeacherTestResults = () => {
                 className="p-4 sm:p-5 border rounded-xl sm:rounded-2xl shadow hover:shadow-lg cursor-pointer transition bg-white"
                 onClick={() => fetchSubmissions(test._id)}
               >
-                <h3 className="text-base sm:text-lg font-semibold text-blue-600">
+                <h2 className="text-base sm:text-lg font-semibold text-black-600 hover:text-blue-500">
                   {test.title}
-                </h3>
-                <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                </h2>
+                {/* <p className="text-sm text-gray-600 mt-1 line-clamp-2">
                   {test.description}
-                </p>
+                </p> */}
               </div>
             ))}
           </div>

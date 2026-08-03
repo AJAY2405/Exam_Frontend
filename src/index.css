@@ -3,3 +3,19 @@
 
 @custom-variant dark (&:is(.dark *));
 
+
+/* Chrome, Safari and Edge */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* IE and Edge */
+body {
+  -ms-overflow-style: none;
+}
+
