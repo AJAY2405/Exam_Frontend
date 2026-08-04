@@ -41,6 +41,7 @@ import TeacherTests from "./components/Teacher/TeacherTests";
 import EditTest from "./components/Teacher/Edittest";
 import ResultPage from "./components/Student/ResultPage";
 import HomeSection from "./components/HomeSection";
+import ProgressPage from "./components/Student/ProgressPage";
 
 const appRouter = createBrowserRouter([
   {
@@ -53,6 +54,7 @@ const appRouter = createBrowserRouter([
 
       // ✅ Student routes
       { path: "/test", element: <StudentPages /> },
+      { path: "/progress", element: <ProgressPage /> },
       { path: "/student/tests/:id", element: <TakeTest /> },
       { path: "/result", element: <ResultPage /> },
       { path: "/notices", element: <Notices/> },

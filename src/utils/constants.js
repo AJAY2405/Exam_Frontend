@@ -20,8 +20,8 @@ export const NOTES_API_END_POINT = `${BASE_URL}/api/v1/notes`;
 
 
 
-export const CLASS_API_END_POINT = `${BASE_URL}/api/classes`;
-export const CLASS_STUDENT_API_END_POINT = `${BASE_URL}/api/students`;
+// export const CLASS_API_END_POINT = `${BASE_URL}/api/classes`;
+// export const CLASS_STUDENT_API_END_POINT = `${BASE_URL}/api/students`;
 
 
 

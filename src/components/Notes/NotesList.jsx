@@ -64,9 +64,17 @@ const NotesList = () => {
       className="min-h-screen 
       bg-white dark:bg-black 
       text-black dark:text-white 
-      px-6 py-10 mt-10 
+      px-6 py-10 
       transition-colors duration-300"
     >
+       <div className="bg-orange-500 dark:bg-orange-600 rounded-2xl shadow-lg p-10 text-center text-white mt-12 mb-10">
+          <h1 className="text-3xl md:text-4xl font-extrabold">
+            📚 Available Notes
+          </h1>
+          <p className="mt-2 text-orange-100">
+            Choose a Notes and start reading to boost your knowledge.
+          </p>
+        </div>
       {/* 🔹 Search */}
       <div className="max-w-5xl mx-auto mb-6">
         <div className="relative">

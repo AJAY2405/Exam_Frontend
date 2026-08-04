@@ -28,7 +28,7 @@ function Footer() {
 
           {/* Social Links */}
           <div className="flex flex-col items-center sm:items-start">
-            <h3 className="text-lg font-semibold mb-3">Connect with Us</h3>
+            {/* <h3 className="text-lg font-semibold mb-3">Connect with Us</h3> */}
 
             {/* First Row */}
             
