@@ -40,12 +40,13 @@ import Announcement from "./components/Announcement";
 import TeacherTests from "./components/Teacher/TeacherTests";
 import EditTest from "./components/Teacher/Edittest";
 import ResultPage from "./components/Student/ResultPage";
+import HomeSection from "./components/HomeSection";
 
 const appRouter = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      { path: "/", element: <Home /> },
+      { path: "/", element: <HomeSection /> },
       { path: "/announcement", element: <Announcement/> },
       { path: "/about", element: <About /> },
       { path: "/profile", element: <Profile /> },
