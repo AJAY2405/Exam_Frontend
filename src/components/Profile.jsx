@@ -38,127 +38,103 @@ const Profile = () => {
     }
   };
 
-  return (
-    <div
-      className="w-full min-h-screen 
-      bg-white dark:bg-black 
-      text-black dark:text-white 
-      flex items-center justify-center p-6 mt-12 
-      transition-colors duration-300"
-    >
-      {/* Card */}
-      <div
-        className="bg-orange-100/40 dark:bg-black/60 
-        backdrop-blur-xl border border-orange-300/40 dark:border-white/10 
-        shadow-2xl rounded-2xl p-10 w-full max-w-3xl"
-      >
-        {/* Profile */}
-        <div className="flex flex-col items-center">
-          <Avatar className="h-32 w-32 shadow-xl border-4 border-orange-400 rounded-full overflow-hidden">
-            <AvatarImage src="/Images/student.png" alt="profile" />
-          </Avatar>
+return (
+  <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-10">
+    <div className="w-full max-w-lg bg-white rounded-2xl shadow-lg p-8">
 
-          <h1 className="mt-6 font-extrabold text-3xl text-black dark:text-white">
-            {user?.fullname || "Your Name"}
-          </h1>
+      {/* Profile Image */}
+      <div className="flex flex-col items-center">
+        <Avatar className="h-28 w-28">
+          <AvatarImage src="/Images/student.png" alt="Profile" />
+        </Avatar>
 
-          <p className="text-gray-600 dark:text-gray-400 text-lg mt-1 italic">
-            {user?.email || "example@email.com"}
+        <h1 className="mt-4 text-2xl font-bold text-gray-800">
+          {user?.fullname}
+        </h1>
+
+        <p className="text-gray-500">
+          {user?.email}
+        </p>
+      </div>
+
+      {/* Information */}
+      <div className="mt-8 space-y-4">
+
+        <div className="border rounded-lg p-4">
+          <h3 className="font-semibold text-gray-700">Role</h3>
+          <p className="text-gray-600">
+            {user?.role}
           </p>
         </div>
 
-        {/* Divider */}
-        <div className="my-6 border-t border-orange-300/40 dark:border-white/10 w-2/3 mx-auto"></div>
+        <div className="border rounded-lg p-4">
+          <h3 className="font-semibold text-gray-700">Joined On</h3>
+          <p className="text-gray-600">
+            {user?.createdAt
+              ? new Date(user.createdAt).toLocaleDateString()
+              : "N/A"}
+          </p>
+        </div>
 
-        {/* Info */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-center">
-          
-          {/* Role */}
-          <div className="p-4 bg-orange-200/40 dark:bg-black/50 rounded-xl shadow-sm">
-            <h3 className="font-semibold text-gray-700 dark:text-gray-300">
-              Role
-            </h3>
-            <p className="text-black dark:text-white">
-              {user?.role || "student"}
-            </p>
-          </div>
+        <div className="border rounded-lg p-4">
+          <h3 className="font-semibold text-gray-700 mb-2">
+            About
+          </h3>
 
-          {/* Joined */}
-          <div className="p-4 bg-orange-200/40 dark:bg-black/50 rounded-xl shadow-sm">
-            <h3 className="font-semibold text-gray-700 dark:text-gray-300">
-              Joined
-            </h3>
-            <p className="text-black dark:text-white">
-              {user?.createdAt
-                ? new Date(user.createdAt).toLocaleDateString()
-                : "N/A"}
-            </p>
-          </div>
+          {isEditing ? (
+            <>
+              <textarea
+                rows="4"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              />
 
-          {/* About */}
-          <div className="p-4 bg-orange-200/40 dark:bg-black/50 rounded-xl shadow-sm col-span-1 sm:col-span-2">
-            <h3 className="font-semibold text-gray-700 dark:text-gray-300">
-              About
-            </h3>
-
-            {isEditing ? (
-              <div className="mt-2">
-                <textarea
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="w-full p-3 border rounded-lg 
-                  bg-white dark:bg-black 
-                  text-black dark:text-white 
-                  border-gray-300 dark:border-gray-600"
-                  rows="4"
-                />
-
-                <div className="flex gap-3 mt-3 justify-center">
-                  <Button className="bg-green-500 hover:bg-green-600 text-white" onClick={handleSave}>
-                    Save
-                  </Button>
-
-                  <Button
-                    onClick={() => setIsEditing(false)}
-                    className="bg-gray-400 hover:bg-gray-500 text-white"
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              <div className="mt-2">
-                <h2 className="text-black dark:text-white">
-                  {user?.description ||
-                    "No description added yet. Update your profile!"}
-                </h2>
+              <div className="flex gap-3 mt-4">
+                <Button
+                  onClick={handleSave}
+                  className="flex-1 bg-orange-500 hover:bg-orange-600 text-white"
+                >
+                  Save
+                </Button>
 
                 <Button
-                  onClick={() => setIsEditing(true)}
-                  className="mt-5 bg-orange-400 hover:bg-orange-500 text-white"
+                  onClick={() => setIsEditing(false)}
+                  className="flex-1 bg-gray-400 hover:bg-gray-500 text-white"
                 >
-                  Edit About
+                  Cancel
                 </Button>
               </div>
-            )}
-          </div>
+            </>
+          ) : (
+            <>
+              <p className="text-gray-600">
+                {user?.description || "No description added."}
+              </p>
+
+              <Button
+                onClick={() => setIsEditing(true)}
+                className="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white"
+              >
+                Edit About
+              </Button>
+            </>
+          )}
         </div>
 
-        {/* Divider */}
-        <div className="my-6 border-t border-orange-300/40 dark:border-white/10 w-2/3 mx-auto"></div>
-
-        {/* Logout */}
-        <div className="flex justify-center">
-          <Button
-            className="w-40 bg-red-500 hover:bg-red-700 text-white font-semibold py-2 rounded-lg shadow-md transition-all duration-300"
-            onClick={handleLogout}
-          >
-            Logout
-          </Button>
-        </div>
       </div>
+
+      {/* Logout */}
+      <Button
+        onClick={handleLogout}
+        className="w-full mt-8 bg-red-500 hover:bg-red-600 text-white"
+      >
+        Logout
+      </Button>
+
     </div>
-  );
+  </div>
+);
 };
 
 export default Profile;

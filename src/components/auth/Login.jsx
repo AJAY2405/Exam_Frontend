@@ -55,96 +55,109 @@ const Login = () => {
   }, [user, navigate]);
 
   return (
-    <div className="h-screen w-screen flex items-center justify-center bg-[#FAF6F2]">
-      <div className="flex flex-col md:flex-row w-full h-full md:h-[80%] md:w-[70%] bg-white rounded-2xl shadow-lg overflow-hidden">
-        {/* Left Section */}
-        <div className="flex-1 flex flex-col justify-center p-8 md:p-12">
-          <h2 className="text-[#080808] text-3xl font-bold">
-            Login Account
-          </h2>{" "}
-          <form onSubmit={submitHandler} className="space-y-4">
-            <div>
-              <label className="block text-gray-600 mb-1">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={input.email}
-                onChange={changeEventHandler}
-                placeholder="email@gmail.com"
-                className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#FCD9B8] text-black"
-              />
-            </div>
+  <div className="min-h-screen bg-gradient-to-br from-orange-50 to-white flex items-center justify-center px-4">
+    <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
 
-            <div>
-              <label className="block text-gray-600 mb-1">Password</label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  value={input.password}
-                  onChange={changeEventHandler}
-                  placeholder="Enter your password"
-                  className="w-full border border-gray-300 rounded-full px-4 py-2 pr-12 focus:outline-none focus:ring-2 focus:ring-[#FCD9B8] text-black"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black"
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-            </div>
+      {/* Logo */}
+      <div className="flex flex-col items-center mb-8">
+        <img
+          src="/Images/logo.png"
+          alt="MDA Coaching Institute"
+          className="w-24 h-24 object-contain"
+        />
 
-            {/* <div>
-              <label className="block text-gray-600 mb-1">Role</label>
-              <select
-                name="role"
-                value={input.role}
-                onChange={changeEventHandler}
-                className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#FCD9B8] text-black"
-              >
-                <option value="">Select Role</option>
-                <option value="student">Student</option>
-                <option value="teacher">Teacher</option>
-              </select>
-            </div>  */}
+        <h1 className="mt-3 text-2xl font-bold text-[#1F2A56]">
+          MDA Coaching Institute
+        </h1>
 
-           <button
-  type="submit"
-  className="w-full py-3 rounded-full bg-[#E48D3C] text-white font-semibold hover:bg-[#f2ebe4]"
->
-  Login
-</button>
-          </form>
-          {/* Divider */}
-          <div className="flex items-center my-6">
-            <div className="flex-grow border-t border-gray-300"></div>
-            <span className="mx-3 text-gray-400 text-sm">Or continue with</span>
-            <div className="flex-grow border-t border-gray-300"></div>
-          </div>
-          <p className="text-center text-sm mt-6 text-gray-500">
-            Don’t have an account?{" "}
-            <Link
-              to="/signup"
-              className="text-[#F4A261] font-semibold hover:underline"
-            >
-              Sign up
-            </Link>
-          </p>
-        </div>
+        <p className="text-gray-500 text-sm mt-1">
+          Welcome Back! Login to Continue
+        </p>
+      </div>
 
-        {/* Right Section */}
-        <div className="flex-1 flex items-center justify-center bg-[#FAE5D3] p-8">
-          <img
-            src="/Images/student.png"
-            alt="Login Illustration"
-            className="w-64 md:w-80"
+      {/* Form */}
+      <form onSubmit={submitHandler} className="space-y-5">
+
+        <div>
+          <label className="block mb-2 text-gray-700 font-medium">
+            Email
+          </label>
+
+          <input
+            type="email"
+            name="email"
+            value={input.email}
+            onChange={changeEventHandler}
+            placeholder="Enter your email"
+            className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-orange-400 focus:outline-none"
           />
         </div>
-      </div>
+
+        <div>
+          <label className="block mb-2 text-gray-700 font-medium">
+            Password
+          </label>
+
+          <div className="relative">
+
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={input.password}
+              onChange={changeEventHandler}
+              placeholder="Enter your password"
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-500"
+            >
+              {showPassword ? (
+                <EyeOff size={20} />
+              ) : (
+                <Eye size={20} />
+              )}
+            </button>
+
+          </div>
+        </div>
+
+        <div className="flex justify-end">
+          <Link
+            to="/forgot-password"
+            className="text-sm text-orange-500 hover:underline"
+          >
+            Forgot Password?
+          </Link>
+        </div>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition-all duration-300"
+        >
+          {loading ? "Logging in..." : "Login"}
+        </button>
+
+      </form>
+
+      <div className="my-6 border-t"></div>
+
+      <p className="text-center text-gray-600">
+        Don't have an account?{" "}
+        <Link
+          to="/signup"
+          className="text-orange-500 font-semibold hover:underline"
+        >
+          Sign Up
+        </Link>
+      </p>
+
     </div>
-  );
+  </div>
+);
 };
 
 export default Login;

@@ -61,102 +61,135 @@ const Signup = () => {
   }, [user, navigate]);
 
   return (
-    <div className="h-screen w-screen flex items-center justify-center bg-[#FAF6F2]">
-      <div className="flex flex-col md:flex-row w-full h-full md:h-[75%] md:w-[70%] bg-white rounded-2xl shadow-lg overflow-hidden">
-        {/* Left Section */}
-        <div className="flex-1 flex items-center justify-center bg-[#FAE5D3] p-8">
-          <img
-            src="/Images/student.png"
-            alt="Signup Illustration"
-            className="w-64 md:w-80"
+  <div className="min-h-screen bg-gradient-to-br from-orange-50 to-white flex items-center justify-center px-4 py-8">
+    <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+
+      {/* Logo */}
+      <div className="flex flex-col items-center mb-8">
+        <img
+          src="/Images/logo.png"
+          alt="MDA Coaching Institute"
+          className="w-24 h-24 object-contain"
+        />
+
+        <h1 className="mt-3 text-2xl font-bold text-[#1F2A56] text-center">
+          MDA Coaching Institute
+        </h1>
+
+        <p className="text-gray-500 text-sm mt-2 text-center">
+          Create your account to start learning
+        </p>
+      </div>
+
+      {/* Signup Form */}
+      <form onSubmit={submitHandler} className="space-y-5">
+
+        {/* Full Name */}
+        <div>
+          <label className="block mb-2 text-gray-700 font-medium">
+            Full Name
+          </label>
+
+          <input
+            type="text"
+            name="fullname"
+            value={input.fullname}
+            onChange={changeEventHandler}
+            placeholder="Enter your full name"
+            className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
           />
         </div>
 
-        {/* Right Section */}
-        <div className="flex-1 flex flex-col justify-center p-8 md:p-12">
-          <h2 className="text-[#010004] text-3xl font-bold">
-            Create Account
-          </h2>{" "}
-          <form onSubmit={submitHandler} className="space-y-4">
-            <div>
-              <label className="block text-gray-600 mb-1">Full Name</label>
-              <input
-                type="text"
-                value={input.fullname}
-                onChange={changeEventHandler}
-                name="fullname"
-                placeholder="User Name"
-                className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-peach-300 text-black"
-              />
-            </div>
+        {/* Email */}
+        <div>
+          <label className="block mb-2 text-gray-700 font-medium">
+            Email
+          </label>
 
-            <div>
-              <label className="block text-gray-600 mb-1">Email</label>
-              <input
-                type="email"
-                value={input.email}
-                name="email"
-                onChange={changeEventHandler}
-                placeholder="email@gmail.com"
-                className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-peach-300 text-black"
-              />
-            </div>
+          <input
+            type="email"
+            name="email"
+            value={input.email}
+            onChange={changeEventHandler}
+            placeholder="Enter your email"
+            className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
+          />
+        </div>
 
-             <div>
-              <label className="block text-gray-600 mb-1">Password</label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  value={input.password}
-                  onChange={changeEventHandler}
-                  placeholder="Enter your password"
-                  className="w-full border border-gray-300 rounded-full px-4 py-2 pr-12 focus:outline-none focus:ring-2 focus:ring-[#FCD9B8] text-black"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black"
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-            </div>
+        {/* Phone */}
+        <div>
+          <label className="block mb-2 text-gray-700 font-medium">
+            Phone Number
+          </label>
 
-            {/* <div>
-              <label className="block text-gray-600 mb-1">Role</label>
-              <select
-                name="role"
-                value={input.role}
-                onChange={changeEventHandler}
-                className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-peach-300 text-black"
-              >
-                <option value="">Select Role</option>
-                <option value="student">Student</option>
-                <option value="teacher">Teacher</option>
-              </select>
-            </div> */}
+          <input
+            type="tel"
+            name="phoneNumber"
+            value={input.phoneNumber}
+            onChange={changeEventHandler}
+            placeholder="Enter your phone number"
+            className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
+          />
+        </div>
+
+        {/* Password */}
+        <div>
+          <label className="block mb-2 text-gray-700 font-medium">
+            Password
+          </label>
+
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={input.password}
+              onChange={changeEventHandler}
+              placeholder="Create a password"
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-orange-400"
+            />
 
             <button
-  type="submit"
-  className="w-full py-3 rounded-full bg-[#E48D3C] text-white font-semibold hover:bg-[#fcf7f2]"
->
-  Sign Up
-</button>
-          </form>
-          <p className="text-center text-sm mt-6 text-gray-500">
-            Already have an account?{" "}
-            <Link
-              to="/login"
-              className="text-[#F4A261] font-semibold hover:underline"
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
             >
-              Login
-            </Link>
-          </p>
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
         </div>
+
+        {/* Button */}
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition duration-300"
+        >
+          {loading ? "Creating Account..." : "Sign Up"}
+        </button>
+      </form>
+
+      {/* Divider */}
+      <div className="flex items-center my-6">
+        <div className="flex-1 border-t border-gray-300"></div>
+        <span className="mx-3 text-sm text-gray-400">
+          Already have an account?
+        </span>
+        <div className="flex-1 border-t border-gray-300"></div>
       </div>
+
+      {/* Login Link */}
+      <p className="text-center text-gray-600">
+        <Link
+          to="/login"
+          className="text-orange-500 font-semibold hover:underline"
+        >
+          Login Here
+        </Link>
+      </p>
+
     </div>
-  );
+  </div>
+);
 };
 
 export default Signup;

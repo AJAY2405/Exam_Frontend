@@ -119,7 +119,7 @@ function HomeSection() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-white  py-15 space-y-16 ">
+    <div className="min-h-screen bg-white px-6 py-15 space-y-16 ">
       {/* Hero */}
       <section className="text-center">
         <img
