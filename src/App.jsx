@@ -55,7 +55,7 @@ const appRouter = createBrowserRouter([
       // ✅ Student routes
       { path: "/test", element: <StudentPages /> },
       { path: "/progress", element: <ProgressPage /> },
-      { path: "/student/tests/:id", element: <TakeTest /> },
+      // { path: "/student/tests/:id", element: <TakeTest /> },
       { path: "/result", element: <ResultPage /> },
       { path: "/notices", element: <Notices/> },
 
@@ -121,6 +121,7 @@ const appRouter = createBrowserRouter([
       },
     ],
   },
+  { path: "/student/tests/:id", element: <TakeTest /> },
 
   // Auth routes
   { path: "/login", element: <Login /> },
