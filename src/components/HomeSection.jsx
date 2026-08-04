@@ -62,7 +62,7 @@ function Slider({ data, type }) {
   const current = data[index];
 
   return (
-    <section className="py-10">
+    <section className="py-5">
       <h2 className="text-3xl font-bold text-center mb-10 text-black">
         {type === "teacher" ? "Our Teachers" : "Our Achievers"}
       </h2>
@@ -119,7 +119,7 @@ function HomeSection() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-white px-6 py-8 space-y-16">
+    <div className="min-h-screen bg-white  py-15 space-y-16 ">
       {/* Hero */}
       <section className="text-center">
         <img

@@ -18,4 +18,16 @@ html {
 body {
   -ms-overflow-style: none;
 }
+/* body {
+  zoom: 80%;
+} */
+
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
 
