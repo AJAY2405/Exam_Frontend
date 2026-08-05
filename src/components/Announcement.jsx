@@ -18,7 +18,8 @@ const data = [
     title: "Mid-Term Exams",
     category: "Exam",
     date: "April 2026",
-    image: "https://res.cloudinary.com/dfxr85udp/image/upload/v1775581326/Gemini_Generated_Image_3lb4px3lb4px3lb4_kpdh1r.png",
+    image:
+      "https://res.cloudinary.com/dfxr85udp/image/upload/v1775581326/Gemini_Generated_Image_3lb4px3lb4px3lb4_kpdh1r.png",
     desc: "Mid-term exams will begin from 15 April.",
     details: "Exam instructions...",
   },
@@ -27,7 +28,8 @@ const data = [
     title: "Annual Function 2026",
     category: "Event",
     date: "April 25, 2026",
-    image: "https://res.cloudinary.com/dfxr85udp/image/upload/v1775580607/Gemini_Generated_Image_yoyduwyoyduwyoyd_k4jy2w.png",
+    image:
+      "https://res.cloudinary.com/dfxr85udp/image/upload/v1775580607/Gemini_Generated_Image_yoyduwyoyduwyoyd_k4jy2w.png",
     desc: "Join our grand cultural annual function.",
     details: "Event details...",
   },
@@ -39,7 +41,6 @@ export default function Announcement() {
   const [active, setActive] = useState("All");
   const [selected, setSelected] = useState(null);
 
-  // optional (if needed)
   const { resolvedTheme } = useTheme();
 
   const filtered =
@@ -53,35 +54,31 @@ export default function Announcement() {
   /* ================= DETAIL PAGE ================= */
   if (selected) {
     return (
-      <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white transition-all duration-300 p-6 mt-10">
+      <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white p-6 mt-10">
         <button
           onClick={() => setSelected(null)}
-          className="mb-6 px-5 py-2 rounded-full 
-          bg-orange-500 hover:bg-orange-600 
-          text-white transition"
+          className="mb-6 px-5 py-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white transition"
         >
           ← Back
         </button>
 
-        <div
-          className="max-w-4xl mx-auto 
-        bg-orange-100/40 dark:bg-white/5 
-        backdrop-blur-xl 
-        border border-orange-300/40 dark:border-white/10 
-        rounded-3xl shadow-2xl overflow-hidden"
-        >
+        <div className="max-w-3xl mx-auto border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
           <img
             src={getImage(selected.image)}
             alt={selected.title}
-            className="w-full h-80 object-cover"
+            className="w-full h-72 object-cover"
           />
 
-          <div className="p-8">
-            <h2 className="text-4xl font-bold text-orange-500 mb-2">
+          <div className="p-6">
+            <span className="text-xs font-medium bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-300 px-3 py-1 rounded-full">
+              {selected.category}
+            </span>
+
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-3 mb-1">
               {selected.title}
             </h2>
 
-            <p className="text-gray-500 dark:text-gray-400 mb-6">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
               📅 {selected.date}
             </p>
 
@@ -96,121 +93,103 @@ export default function Announcement() {
 
   /* ================= MAIN PAGE ================= */
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white transition-all duration-300 overflow-hidden">
-      {/* HERO */}
-      <div
-        className="relative text-center py-20 
-      bg-gradient-to-r from-orange-400 via-white to-green-500 text-white overflow-hidden"
-      >
-        <div className="absolute w-96 h-96 bg-white/10 rounded-full blur-3xl animate-pulse top-[-100px] left-[-100px]" />
-        <div className="absolute w-96 h-96 bg-orange-300/20 rounded-full blur-3xl animate-pulse bottom-[-120px] right-[-120px]" />
-
-        <img src="/Images/logo.png" alt="logo" className="w-36 mx-auto" />
-
-        <h1 className="text-5xl font-extrabold text-orange-700 relative z-10">
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
+      {/* Header */}
+      <div className="text-center py-14 px-4 border-b border-gray-100 dark:border-gray-800">
+        <img src="/Images/logo.png" alt="logo" className="w-20 mx-auto mb-4" />
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
           Announcements
         </h1>
-
-        <p className="opacity-90 mt-3 text-lg relative z-10 text-orange-600">
-          Stay updated with latest academy news & events
+        <p className="text-gray-500 dark:text-gray-400 mt-2">
+          Stay updated with the latest academy news & events
         </p>
       </div>
 
-      {/* 🔥 LATEST */}
-      {latest && (
-        <div className="max-w-6xl mx-auto px-4 -mt-14 mb-12">
+      <div className="max-w-6xl mx-auto px-4 py-10">
+        {/* Latest */}
+        {latest && (
           <div
             onClick={() => setSelected(latest)}
-            className="group cursor-pointer rounded-3xl overflow-hidden
-            bg-orange-100/40 dark:bg-white/5 backdrop-blur-xl
-            border border-orange-300/40 dark:border-white/10
-            shadow-xl hover:shadow-2xl transition hover:scale-[1.02]"
+            className="cursor-pointer border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden mb-10 flex flex-col md:flex-row hover:border-orange-400 transition"
           >
-            <div className="overflow-hidden md:w-1/2">
-              <img
-                src={getImage(latest.image)}
-                alt={latest.title}
-                className="h-72 w-full object-cover group-hover:scale-110 transition"
-              />
-            </div>
+            <img
+              src={getImage(latest.image)}
+              alt={latest.title}
+              className="w-full md:w-1/2 h-56 object-cover"
+            />
 
-            <div className="p-8 flex flex-col justify-center">
-              <span className="text-red-500 font-bold mb-2 animate-pulse">
+            <div className="p-6 flex flex-col justify-center">
+              <span className="text-xs font-semibold text-red-500 mb-2">
                 🔥 Latest Update
               </span>
-
-              <h2 className="text-3xl font-bold text-orange-500">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                 {latest.title}
               </h2>
-
-              <p className="mt-3 text-gray-600 dark:text-gray-300">
+              <p className="mt-2 text-gray-600 dark:text-gray-300 text-sm">
                 {latest.desc}
               </p>
-
-              <span className="text-gray-400 mt-4">
+              <span className="text-xs text-gray-400 mt-4">
                 📅 {latest.date}
               </span>
             </div>
           </div>
+        )}
+
+        {/* Filter */}
+        <div className="flex flex-wrap gap-2 mb-8">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActive(cat)}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium border transition ${
+                active === cat
+                  ? "bg-orange-500 border-orange-500 text-white"
+                  : "bg-white dark:bg-transparent border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-orange-400"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
         </div>
-      )}
 
-      {/* FILTER */}
-      <div className="flex justify-center gap-4 flex-wrap mb-10">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setActive(cat)}
-            className={`px-6 py-2 rounded-full font-semibold transition
-            ${
-              active === cat
-                ? "bg-orange-500 text-white shadow-lg scale-105"
-                : "bg-orange-100/60 dark:bg-white/5 text-black dark:text-white border border-orange-300 dark:border-white/20 hover:scale-105"
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      {/* CARDS */}
-      <div className="max-w-6xl mx-auto px-4 pb-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filtered.map((item) => (
-          <div
-            key={item.id}
-            onClick={() => setSelected(item)}
-            className="group cursor-pointer rounded-3xl
-            bg-orange-100/40 dark:bg-white/5 backdrop-blur-xl
-            border border-orange-300/40 dark:border-white/10
-            shadow-lg hover:shadow-2xl transition hover:-translate-y-3"
-          >
-            <div className="overflow-hidden rounded-t-3xl">
+        {/* Cards */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filtered.map((item) => (
+            <div
+              key={item.id}
+              onClick={() => setSelected(item)}
+              className="cursor-pointer border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:border-orange-400 transition"
+            >
               <img
                 src={getImage(item.image)}
                 alt={item.title}
-                className="h-52 w-full object-cover group-hover:scale-110 transition"
+                className="h-44 w-full object-cover"
               />
+
+              <div className="p-5">
+                <span className="text-xs font-medium bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-300 px-3 py-1 rounded-full">
+                  {item.category}
+                </span>
+
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mt-3">
+                  {item.title}
+                </h3>
+
+                <p className="text-gray-600 dark:text-gray-300 text-sm mt-1">
+                  {item.desc}
+                </p>
+
+                <p className="text-xs text-gray-400 mt-3">📅 {item.date}</p>
+              </div>
             </div>
+          ))}
+        </div>
 
-            <div className="p-6">
-              <span className="text-xs font-semibold bg-orange-200 dark:bg-orange-800 text-orange-700 dark:text-orange-300 px-3 py-1 rounded-full">
-                {item.category}
-              </span>
-
-              <h3 className="text-xl font-bold mt-3 group-hover:text-orange-500 transition">
-                {item.title}
-              </h3>
-
-              <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">
-                {item.desc}
-              </p>
-
-              <p className="text-xs text-gray-400 mt-4">
-                📅 {item.date}
-              </p>
-            </div>
-          </div>
-        ))}
+        {filtered.length === 0 && (
+          <p className="text-center text-gray-400 py-16">
+            No announcements in this category yet.
+          </p>
+        )}
       </div>
     </div>
   );

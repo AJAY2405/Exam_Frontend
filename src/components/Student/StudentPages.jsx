@@ -113,7 +113,7 @@ export default function StudentPage() {
 
               <div className="flex items-start gap-2 mt-3 text-gray-700 dark:text-gray-300">
                 <FileText className="w-5 h-5 mt-1 flex-shrink-0 text-gray-400" />
-                <p className="line-clamp-3">{t.description}</p>
+                <p className="line-clamp-2">{t.description}</p>
               </div>
 
               <div className="mt-auto pt-6 flex justify-end">
