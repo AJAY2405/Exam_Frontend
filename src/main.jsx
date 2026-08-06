@@ -8,15 +8,14 @@ import { Provider } from 'react-redux';
 import store, { persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from './components/theme-provider.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <App />
         </PersistGate>
       </Provider>
-    </ThemeProvider>
   </StrictMode>
 );

@@ -43,12 +43,17 @@ import ResultPage from "./components/Student/ResultPage";
 import HomeSection from "./components/HomeSection";
 import ProgressPage from "./components/Student/ProgressPage";
 import TestReview from "./components/Student/TestReview";
+import ScrollToTop from "./components/ScrollToTop";
 
 const appRouter = createBrowserRouter([
   {
-    element: <Layout />,
+    element: (
+    <ScrollToTop>
+      <Layout />
+    </ScrollToTop>
+  ),
     children: [
-      { path: "/", element: <HomeSection /> },
+      { path: "/", element: <Home /> },
       { path: "/announcement", element: <Announcement/> },
       { path: "/about", element: <About /> },
       { path: "/profile", element: <Profile /> },

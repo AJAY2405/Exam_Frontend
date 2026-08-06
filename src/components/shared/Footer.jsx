@@ -6,9 +6,15 @@ import {
   FaInstagram,
   FaWhatsapp,
   FaEnvelope,
+  FaMapMarkerAlt,
 } from "react-icons/fa";
 
 function Footer() {
+  const address = "Ward No. 15, Sultanpur Barahgawa, Madhuban, Mau, Uttar Pradesh, 221603";
+  // ✅ NEW: exact coordinates for accurate pin placement
+  const latitude = 26.1654418;
+  const longitude = 83.68197;
+
   return (
     <footer className="bg-[#FAF6F2] text-gray-800 mt-10">
       <div className="max-w-4xl mx-auto px-6 py-10 rounded-2xl shadow-md">
@@ -28,12 +34,6 @@ function Footer() {
 
           {/* Social Links */}
           <div className="flex flex-col items-center sm:items-start">
-            {/* <h3 className="text-lg font-semibold mb-3">Connect with Us</h3> */}
-
-            {/* First Row */}
-            
-
-            {/* Second Row */}
             <div className="flex space-x-5 text-2xl text-gray-700">
               <a
                 href="https://wa.me/919569559316"
@@ -62,8 +62,23 @@ function Footer() {
             </div>
           </div>
 
-          {/* Contact Info */}
-          
+          {/* Contact Info / Location */}
+          <div className="flex flex-col items-center sm:items-start">
+            <h3 className="text-lg font-semibold mb-3">Visit Us</h3>
+            <div className="flex items-start gap-2 text-sm text-gray-600 text-center sm:text-left">
+              <FaMapMarkerAlt className="text-orange-500 mt-0.5 shrink-0" />
+              <span>{address}</span>
+            </div>
+            {/* ✅ FIX: use exact lat/lng instead of a text search for an accurate pin */}
+            <a
+              href={`https://www.google.com/maps?q=${latitude},${longitude}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-orange-600 hover:text-orange-700 hover:underline mt-2"
+            >
+              View on Map →
+            </a>
+          </div>
         </div>
 
         {/* Bottom Bar */}

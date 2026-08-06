@@ -2,18 +2,17 @@
 import React from "react";
 import Navbar from "./shared/Navbar";
 import HomeSection from "./HomeSection";
+import { useSelector } from "react-redux";
+import TeacherHome from "./TeacherHome";
  
 const Home = () => {
-  return (
-    <div className="flex h-screen mt-8">
-      
-      {/* Sidebar */}
-      {/* <Navbar /> */}
- 
-      {/* Main Content */}
+const { user } = useSelector((state) => state.auth);  return (
+    <div>
+      {user?.role === "teacher" ? (
+        <TeacherHome />
+      ) : (
         <HomeSection />
-      
-   
+      )}
     </div>
   );
 };
