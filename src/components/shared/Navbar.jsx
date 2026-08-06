@@ -111,6 +111,7 @@ const Navbar = () => {
           {!collapsed && (
             <img src="/Images/logo.png" alt="Logo" className="h-9 select-none" />
           )}
+          {/* <h2 className="font-bold text-1.5xl text-orange-700">MDA Institute</h2> */}
           <button
             onClick={() => setOpen((prev) => !prev)}
             className={`text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-lg p-2 transition ${
@@ -125,7 +126,7 @@ const Navbar = () => {
         {/* User name */}
         {user && !collapsed && (
           <div className="px-4 pt-4 pb-2">
-            <p className="text-gray-900 font-semibold truncate">{user?.fullname}</p>
+            <p className="text-gray-900  font-bold text-1.5xl truncate"> {user?.fullname}</p>
           </div>
         )}
 
@@ -166,11 +167,11 @@ const Navbar = () => {
                   }`}
                 >
                   <User size={20} className="shrink-0" />
-                  {!collapsed && <span>Profile</span>}
+                  {!collapsed && <span>{user?.email}</span>}
                 </Link>
                 {collapsed && (
                   <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-md bg-gray-900 text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-50">
-                    Profile
+                    {user?.email}
                   </span>
                 )}
               </div>
