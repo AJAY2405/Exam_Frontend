@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // ✅ NEW
 import { TEACHER_RESULTS_STUDENT } from "../../utils/constants";
 import {
   TrendingUp,
@@ -8,9 +9,12 @@ import {
   AlertCircle,
   Search,
   SlidersHorizontal,
+  ChevronRight, // ✅ NEW: visual affordance that the card is clickable
 } from "lucide-react";
 
 export default function ProgressPage() {
+  const navigate = useNavigate(); // ✅ NEW
+
   const [results, setResults] = useState([]);
   const [summary, setSummary] = useState({
     totalTests: 0,
@@ -20,10 +24,9 @@ export default function ProgressPage() {
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
 
-  // ✅ NEW: search + filter state
   const [searchTerm, setSearchTerm] = useState("");
-  const [percentageFilter, setPercentageFilter] = useState("all"); // all | high | medium | low
-  const [sortBy, setSortBy] = useState("newest"); // newest | oldest | highest | lowest
+  const [percentageFilter, setPercentageFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("newest");
 
   useEffect(() => {
     const fetchProgress = async () => {
@@ -58,18 +61,14 @@ export default function ProgressPage() {
     return "bg-red-500";
   };
 
-  // ✅ NEW: apply search (by test name), percentage filter, then sort —
-  // recomputed only when results or filter/search/sort state changes.
   const filteredResults = useMemo(() => {
     let list = [...results];
 
-    // Search by test name
     if (searchTerm.trim()) {
       const q = searchTerm.trim().toLowerCase();
       list = list.filter((r) => r.testTitle?.toLowerCase().includes(q));
     }
 
-    // Filter by percentage range
     if (percentageFilter === "high") {
       list = list.filter((r) => r.percentage >= 70);
     } else if (percentageFilter === "medium") {
@@ -78,7 +77,6 @@ export default function ProgressPage() {
       list = list.filter((r) => r.percentage < 50);
     }
 
-    // Sort
     list.sort((a, b) => {
       switch (sortBy) {
         case "oldest":
@@ -95,6 +93,12 @@ export default function ProgressPage() {
 
     return list;
   }, [results, searchTerm, percentageFilter, sortBy]);
+
+  // ✅ NEW: go to the review page for this specific attempt
+  const handleViewReview = (resultId) => {
+    if (!resultId) return;
+    navigate(`/review/${resultId}`);
+  };
 
   if (loading)
     return (
@@ -124,26 +128,26 @@ export default function ProgressPage() {
 
         {/* Summary cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
-  <div className="bg-orange-100/60 border border-orange-300/40 rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center shadow">
-    <ListChecks className="text-orange-500 w-7 h-7 sm:w-8 sm:h-8 mb-2" />
-    <p className="text-xl sm:text-2xl font-bold">{summary.totalTests}</p>
-    <p className="text-xs sm:text-sm text-gray-600">Tests Taken</p>
-  </div>
-  <div className="bg-orange-100/60 border border-orange-300/40 rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center shadow">
-    <TrendingUp className="text-orange-500 w-7 h-7 sm:w-8 sm:h-8 mb-2" />
-    <p className="text-xl sm:text-2xl font-bold">
-      {summary.averagePercentage.toFixed(1)}%
-    </p>
-    <p className="text-xs sm:text-sm text-gray-600">Average Score</p>
-  </div>
-  <div className="bg-orange-100/60 border border-orange-300/40 rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center shadow col-span-2 sm:col-span-1">
-    <Award className="text-orange-500 w-7 h-7 sm:w-8 sm:h-8 mb-2" />
-    <p className="text-xl sm:text-2xl font-bold">
-      {summary.bestPercentage.toFixed(1)}%
-    </p>
-    <p className="text-xs sm:text-sm text-gray-600">Best Score</p>
-  </div>
-</div>
+          <div className="bg-orange-100/60 border border-orange-300/40 rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center shadow">
+            <ListChecks className="text-orange-500 w-7 h-7 sm:w-8 sm:h-8 mb-2" />
+            <p className="text-xl sm:text-2xl font-bold">{summary.totalTests}</p>
+            <p className="text-xs sm:text-sm text-gray-600">Tests Taken</p>
+          </div>
+          <div className="bg-orange-100/60 border border-orange-300/40 rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center shadow">
+            <TrendingUp className="text-orange-500 w-7 h-7 sm:w-8 sm:h-8 mb-2" />
+            <p className="text-xl sm:text-2xl font-bold">
+              {summary.averagePercentage.toFixed(1)}%
+            </p>
+            <p className="text-xs sm:text-sm text-gray-600">Average Score</p>
+          </div>
+          <div className="bg-orange-100/60 border border-orange-300/40 rounded-2xl p-4 sm:p-6 flex flex-col items-center text-center shadow col-span-2 sm:col-span-1">
+            <Award className="text-orange-500 w-7 h-7 sm:w-8 sm:h-8 mb-2" />
+            <p className="text-xl sm:text-2xl font-bold">
+              {summary.bestPercentage.toFixed(1)}%
+            </p>
+            <p className="text-xs sm:text-sm text-gray-600">Best Score</p>
+          </div>
+        </div>
 
         {/* Per-test breakdown */}
         <div>
@@ -151,7 +155,7 @@ export default function ProgressPage() {
             <h2 className="text-xl font-semibold">Test History</h2>
           </div>
 
-          {/* ✅ NEW: Search + Filters bar */}
+          {/* Search + Filters bar */}
           {results.length > 0 && (
             <div className="flex flex-col sm:flex-row gap-3 mb-6">
               {/* Search box */}
@@ -186,18 +190,6 @@ export default function ProgressPage() {
                   <option value="low">Low (&lt; 50%)</option>
                 </select>
               </div>
-
-              {/* Sort */}
-              {/* <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="border border-gray-300 rounded-xl px-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 cursor-pointer"
-              >
-                <option value="newest">Newest First</option>
-                <option value="oldest">Oldest First</option>
-                <option value="highest">Highest Score</option>
-                <option value="lowest">Lowest Score</option>
-              </select> */}
             </div>
           )}
 
@@ -207,24 +199,36 @@ export default function ProgressPage() {
               show up here.
             </p>
           ) : filteredResults.length === 0 ? (
-            // ✅ NEW: distinct empty state when filters/search hide everything
             <p className="text-gray-500 text-center py-12">
               No tests match your search or filter. Try adjusting them.
             </p>
           ) : (
             <div className="space-y-4">
               {filteredResults.map((r) => (
+                // ✅ NEW: whole card is clickable, routes to that attempt's review
                 <div
                   key={r._id}
-                  className="border border-gray-200 rounded-xl p-4 shadow-sm"
+                  onClick={() => handleViewReview(r._id)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      handleViewReview(r._id);
+                    }
+                  }}
+                  className="border border-gray-200 rounded-xl p-4 shadow-sm cursor-pointer hover:border-orange-400 hover:shadow-md transition"
                 >
                   <div className="flex justify-between items-center mb-2 gap-4">
                     <h3 className="font-semibold text-gray-800 truncate">
                       {r.testTitle}
                     </h3>
-                    <span className="text-xs text-gray-500 whitespace-nowrap">
-                      {formatDate(r.submittedAt)}
-                    </span>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-xs text-gray-500 whitespace-nowrap">
+                        {formatDate(r.submittedAt)}
+                      </span>
+                      {/* ✅ NEW: visual cue that this card navigates somewhere */}
+                      <ChevronRight size={16} className="text-gray-400" />
+                    </div>
                   </div>
 
                   <div className="w-full bg-gray-200 rounded-full h-3 mb-1">

@@ -3,7 +3,22 @@ import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "../ui/button";
-import { User, Menu, X } from "lucide-react";
+import {
+  User,
+  Home,
+  ClipboardList,
+  FileText,
+  TrendingUp,
+  Bell,
+  PlusCircle,
+  BarChart3,
+  UploadCloud,
+  Megaphone,
+  Info,
+  LogOut,
+  PanelLeftClose,
+  PanelLeftOpen,
+} from "lucide-react";
 import axios from "axios";
 import { USER_API_END_POINT } from "../../utils/constants";
 import { setUser } from "../../redux/authSlice";
@@ -14,7 +29,10 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
+
+  // ✅ Single source of truth for open/closed — used on every screen size now.
+  // true = sidebar visible; false = collapsed (icon rail on desktop, hidden on mobile)
+  const [open, setOpen] = useState(true);
 
   const logoutHandler = async () => {
     try {
@@ -31,200 +49,159 @@ const Navbar = () => {
     }
   };
 
-  const isActive = (path) =>
-    location.pathname === path
-      ? "bg-orange-400/60 text-black font-semibold shadow-md"
-      : "text-gray-800 hover:bg-orange-300/40 hover:text-black";
+  const isActive = (path) => location.pathname === path;
+  const collapsed = !open;
+
+  const NavItem = ({ to, icon: Icon, label }) => {
+    const active = isActive(to);
+    return (
+      <li className="relative group">
+        <Link
+          to={to}
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${
+            collapsed ? "justify-center" : ""
+          } ${
+            active
+              ? "bg-orange-100 text-orange-700 font-semibold"
+              : "text-gray-700 hover:bg-gray-100"
+          }`}
+        >
+          <Icon size={20} className="shrink-0" />
+          {!collapsed && <span className="truncate">{label}</span>}
+        </Link>
+
+        {collapsed && (
+          <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-md bg-gray-900 text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-50">
+            {label}
+          </span>
+        )}
+      </li>
+    );
+  };
 
   return (
     <>
-      {/* 🔹 Mobile Top Navbar */}
-      <div className="md:hidden fixed top-0 left-0 w-full 
-      bg-orange-200/40 backdrop-blur-lg 
-      shadow-md flex items-center justify-between px-4 py-3 z-50 transition-all duration-300">
-        
-        <img src="/Images/logo.png" alt="Logo" className="h-8 select-none" />
-
+      {/* ✅ NEW: floating button to reopen the sidebar when it's fully hidden on mobile */}
+      {!open && (
         <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="text-gray-900"
+          onClick={() => setOpen(true)}
+          className="md:hidden fixed top-4 left-4 z-50 bg-white border border-gray-200 shadow-md rounded-lg p-2 text-gray-700"
         >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
+          <PanelLeftOpen size={20} />
         </button>
-      </div>
+      )}
 
-      {/* 🔹 Sidebar */}
+      {/* Mobile overlay backdrop — only when sidebar is open on small screens */}
+      {open && (
+        <div
+          onClick={() => setOpen(false)}
+          className="md:hidden fixed inset-0 bg-black/30 z-30"
+        />
+      )}
+
+      {/* 🔹 Sidebar — the ONLY nav element now, no separate top navbar */}
       <aside
-        className={`bg-orange-100/40 backdrop-blur-xl 
-        shadow-2xl fixed top-0 left-0 h-full w-[260px] z-40 
-        transform transition-all duration-300
-        ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+        className={`bg-white border-r border-gray-200 fixed top-0 left-0 h-full z-40
+        transform transition-all duration-300 flex flex-col
+        ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+        ${collapsed ? "md:w-[72px]" : "w-[250px]"}`}
       >
-        {/* Logo */}
-        <div className="hidden md:flex items-center justify-center py-6 
-        border-b border-orange-300/40">
-          <img src="/Images/logo.png" alt="Logo" className="h-[100px] select-none" />
+        {/* Header: logo + toggle */}
+        <div className="flex items-center justify-between px-3 py-4 border-b border-gray-100">
+          {!collapsed && (
+            <img src="/Images/logo.png" alt="Logo" className="h-9 select-none" />
+          )}
+          <button
+            onClick={() => setOpen((prev) => !prev)}
+            className={`text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-lg p-2 transition ${
+              collapsed ? "mx-auto" : ""
+            }`}
+            title={open ? "Collapse sidebar" : "Expand sidebar"}
+          >
+            {open ? <PanelLeftClose size={20} /> : <PanelLeftOpen size={20} />}
+          </button>
         </div>
 
+        {/* User name */}
+        {user && !collapsed && (
+          <div className="px-4 pt-4 pb-2">
+            <p className="text-gray-900 font-semibold truncate">{user?.fullname}</p>
+          </div>
+        )}
+
         {/* Links */}
-        <ul className="flex flex-col gap-4 p-4 font-medium text-lg md:text-xl mt-16">
-
-          {user && (
-            <h2 className="text-gray-900 text-2xl md:text-3xl font-bold mb-5">
-              {user?.fullname}
-            </h2>
-          )}
-
-          <li>
-            <Link
-              to="/"
-              onClick={() => setIsOpen(false)}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${isActive("/")}`}
-            >
-              Home
-            </Link>
-          </li>
+        <ul className="flex-1 overflow-y-auto flex flex-col gap-1 p-2 mt-2">
+          <NavItem to="/" icon={Home} label="Home" />
 
           {user?.role === "student" && (
             <>
-              <li>
-                <Link
-                  to="/test"
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${isActive("/test")}`}
-                >
-                  Test
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  to="/notes"
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${isActive("/notes")}`}
-                >
-                  Notes
-                </Link>
-              </li>
-               <li>
-                <Link
-                  to="/progress"
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${isActive("/progress")}`}
-                >
-                  My Progress
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  to="/notices"
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${isActive("/notices")}`}
-                >
-                  Notice
-                </Link>
-              </li>
+              <NavItem to="/test" icon={ClipboardList} label="Test" />
+              <NavItem to="/notes" icon={FileText} label="Notes" />
+              <NavItem to="/progress" icon={TrendingUp} label="My Progress" />
+              <NavItem to="/notices" icon={Bell} label="Notice" />
             </>
           )}
 
           {user?.role === "teacher" && (
             <>
-              <li>
-                <Link
-                  to="/teacher/create-test"
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${isActive("/teacher/create-test")}`}
-                >
-                  Create Test
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  to="/teacher/results"
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${isActive("/teacher/results")}`}
-                >
-                  Results
-                </Link>
-              </li>
-
-              {/* <li>
-                <Link
-                  to="/classes"
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${isActive("/classes")}`}
-                >
-                  Classes
-                </Link>
-              </li> */}
-
-              <li>
-                <Link
-                  to="/notes/upload"
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${isActive("/notes/upload")}`}
-                >
-                  Upload Notes
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  to="/create-notice"
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${isActive("/create-notice")}`}
-                >
-                  New Notice
-                </Link>
-              </li>
+              <NavItem to="/teacher/create-test" icon={PlusCircle} label="Create Test" />
+              <NavItem to="/teacher/results" icon={BarChart3} label="Results" />
+              <NavItem to="/notes/upload" icon={UploadCloud} label="Upload Notes" />
+              <NavItem to="/create-notice" icon={Megaphone} label="New Notice" />
             </>
           )}
 
-          <li>
-            <Link
-              to="/about"
-              onClick={() => setIsOpen(false)}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${isActive("/about")}`}
-            >
-              About
-            </Link>
-          </li>
+          <NavItem to="/about" icon={Info} label="About" />
         </ul>
 
-        {/* 🔹 Bottom Section */}
-        <div className="absolute bottom-6 w-full px-4">
+        {/* Bottom section */}
+        <div className="border-t border-gray-100 p-2">
           {user ? (
-            <div className="flex flex-col items-center gap-3 p-4 rounded-xl 
-            shadow-lg bg-orange-200/30 backdrop-blur-lg transition-all duration-300">
+            <div className="flex flex-col gap-1">
+              <div className="relative group">
+                <Link
+                  to="/profile"
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-100 transition ${
+                    collapsed ? "justify-center" : ""
+                  }`}
+                >
+                  <User size={20} className="shrink-0" />
+                  {!collapsed && <span>Profile</span>}
+                </Link>
+                {collapsed && (
+                  <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-md bg-gray-900 text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                    Profile
+                  </span>
+                )}
+              </div>
 
-              <Link
-                to="/profile"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-2 text-gray-900 hover:text-orange-600"
-              >
-                <User size={18} /> Profile
-              </Link>
-
-              <Button
-                onClick={logoutHandler}
-                className="bg-red-600 hover:bg-red-800 text-white w-full"
-              >
-                Logout
-              </Button>
+              <div className="relative group">
+                <button
+                  onClick={logoutHandler}
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-600 hover:bg-red-50 transition ${
+                    collapsed ? "justify-center" : ""
+                  }`}
+                >
+                  <LogOut size={20} className="shrink-0" />
+                  {!collapsed && <span>Logout</span>}
+                </button>
+                {collapsed && (
+                  <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-md bg-gray-900 text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                    Logout
+                  </span>
+                )}
+              </div>
             </div>
           ) : (
-            <div className="flex flex-col gap-2">
-              <Link to="/login" onClick={() => setIsOpen(false)}>
+            <div className={`flex flex-col gap-2 ${collapsed ? "items-center" : ""}`}>
+              <Link to="/login" className="w-full">
                 <Button variant="outline" className="w-full">
-                  Login
+                  {collapsed ? "→" : "Login"}
                 </Button>
               </Link>
-
-              <Link to="/signup" onClick={() => setIsOpen(false)}>
+              <Link to="/signup" className="w-full">
                 <Button className="bg-orange-500 hover:bg-orange-600 text-white w-full">
-                  Signup
+                  {collapsed ? "+" : "Signup"}
                 </Button>
               </Link>
             </div>

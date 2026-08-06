@@ -42,6 +42,7 @@ import EditTest from "./components/Teacher/Edittest";
 import ResultPage from "./components/Student/ResultPage";
 import HomeSection from "./components/HomeSection";
 import ProgressPage from "./components/Student/ProgressPage";
+import TestReview from "./components/Student/TestReview";
 
 const appRouter = createBrowserRouter([
   {
@@ -57,6 +58,7 @@ const appRouter = createBrowserRouter([
       { path: "/progress", element: <ProgressPage /> },
       // { path: "/student/tests/:id", element: <TakeTest /> },
       { path: "/result", element: <ResultPage /> },
+      { path: "/review/:resultId", element: <TestReview /> },
       { path: "/notices", element: <Notices/> },
 
       // ✅ Teacher-only routes
