@@ -114,36 +114,36 @@ const CreateNotice = () => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex flex-col items-center p-6 mt-12 gap-10">
+    <div className="w-full min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 dark:from-black dark:via-gray-950 dark:to-black flex flex-col items-center p-6 mt-12 gap-10 transition-colors duration-300">
       {/* Create / Edit form */}
-      <div className="bg-white/90 backdrop-blur-lg border border-gray-200 shadow-2xl rounded-2xl p-10 w-full max-w-2xl">
-        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
+      <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg border border-gray-200 dark:border-gray-800 shadow-2xl dark:shadow-none rounded-2xl p-10 w-full max-w-2xl">
+        <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">
           {editingId ? "Edit Notice" : "Create Notice"}
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
             placeholder="Notice Title"
-            className="w-full p-3 border rounded-lg text-gray-900"
+            className="w-full p-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg text-gray-900 dark:text-white"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <textarea
             placeholder="Notice Message"
-            className="w-full p-3 border rounded-lg text-gray-900"
+            className="w-full p-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg text-gray-900 dark:text-white"
             rows="4"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
           <div className="flex justify-center gap-3">
-            <Button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+            <Button className="bg-blue-600 dark:bg-blue-700 text-white px-6 py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600">
               {editingId ? "Update Notice" : "Publish"}
             </Button>
             {editingId && (
               <Button
                 type="button"
                 onClick={resetForm}
-                className="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500"
+                className="bg-gray-400 dark:bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-500 dark:hover:bg-gray-500"
               >
                 Cancel
               </Button>
@@ -154,12 +154,12 @@ const CreateNotice = () => {
 
       {/* All notices list */}
       <div className="w-full max-w-2xl">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">All Notices</h2>
+        <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">All Notices</h2>
 
         {loadingNotices ? (
-          <p className="text-gray-600">Loading notices...</p>
+          <p className="text-gray-600 dark:text-gray-400">Loading notices...</p>
         ) : notices.length === 0 ? (
-          <p className="text-gray-600">No notices yet.</p>
+          <p className="text-gray-600 dark:text-gray-400">No notices yet.</p>
         ) : (
           <div className="space-y-3">
             {notices.map((notice) => {
@@ -168,17 +168,17 @@ const CreateNotice = () => {
                 <div
                   key={notice._id}
                   onClick={() => canManage && startEdit(notice)}
-                  className={`bg-white/90 backdrop-blur-lg border border-gray-200 shadow-lg rounded-xl p-5 ${
-                    canManage ? "cursor-pointer hover:shadow-xl hover:border-blue-300 transition" : ""
+                  className={`bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg border border-gray-200 dark:border-gray-800 shadow-lg dark:shadow-none rounded-xl p-5 ${
+                    canManage ? "cursor-pointer hover:shadow-xl dark:hover:shadow-none hover:border-blue-300 dark:hover:border-blue-700 transition" : ""
                   }`}
                 >
                   <div className="flex justify-between items-start gap-4">
                     <div>
-                      <h3 className="font-semibold text-gray-800">{notice.title}</h3>
-                      <p className="text-gray-600 mt-1 whitespace-pre-wrap">
+                      <h3 className="font-semibold text-gray-800 dark:text-white">{notice.title}</h3>
+                      <p className="text-gray-600 dark:text-gray-300 mt-1 whitespace-pre-wrap">
                         {notice.message}
                       </p>
-                      <p className="text-xs text-gray-400 mt-2">
+                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
                         {notice.createdBy?.name ? `By ${notice.createdBy.name} · ` : ""}
                         {formatDate(notice.createdAt)}
                       </p>
@@ -191,7 +191,7 @@ const CreateNotice = () => {
                             e.stopPropagation();
                             startEdit(notice);
                           }}
-                          className="bg-yellow-500 text-white px-3 py-1.5 rounded text-sm hover:bg-yellow-400"
+                          className="bg-yellow-500 dark:bg-yellow-600 text-white px-3 py-1.5 rounded text-sm hover:bg-yellow-400 dark:hover:bg-yellow-500"
                         >
                           Edit
                         </button>
@@ -201,7 +201,7 @@ const CreateNotice = () => {
                             handleDelete(notice._id, notice.title);
                           }}
                           disabled={deletingId === notice._id}
-                          className="bg-red-600 text-white px-3 py-1.5 rounded text-sm hover:bg-red-500 disabled:opacity-50"
+                          className="bg-red-600 dark:bg-red-700 text-white px-3 py-1.5 rounded text-sm hover:bg-red-500 dark:hover:bg-red-600 disabled:opacity-50"
                         >
                           {deletingId === notice._id ? "Deleting..." : "Delete"}
                         </button>

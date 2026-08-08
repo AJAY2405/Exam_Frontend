@@ -1,3 +1,4 @@
+
 // src/components/Layout.jsx
 import React, { useState } from "react";
 import { Outlet, useNavigation } from "react-router-dom";
@@ -6,8 +7,8 @@ import Footer from "./Footer";
 
 // Simple Spinner component (you can customize)
 const LoadingSpinner = () => (
-  <div className="fixed inset-0 flex items-center justify-center bg-white/70 z-50">
-    <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+  <div className="fixed inset-0 flex items-center justify-center bg-white/70 dark:bg-black/70 z-50">
+    <div className="w-12 h-12 border-4 border-blue-500 dark:border-blue-400 border-t-transparent rounded-full animate-spin"></div>
   </div>
 );
 
@@ -19,7 +20,7 @@ const Layout = () => {
   const isLoading = navigation.state === "loading";
 
   return (
-    <div className="flex min-h-screen bg-gray-50 relative">
+    <div className="flex min-h-screen bg-gray-50 dark:bg-black relative transition-colors duration-300">
       {/* Sidebar */}
       <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
 

@@ -11,8 +11,12 @@ import {
   ResponsiveContainer,
   ReferenceArea,
 } from "recharts";
+import { useTheme } from "../theme-provider";
 
 export default function Analysis() {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
@@ -65,14 +69,14 @@ export default function Analysis() {
     const data = payload[0].payload;
 
     return (
-      <div className="bg-white border border-gray-300 rounded-lg shadow-lg p-3">
-        <h3 className="font-semibold text-gray-800">{data.name}</h3>
+      <div className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg p-3">
+        <h3 className="font-semibold text-gray-800 dark:text-gray-100">{data.name}</h3>
 
-        <p className="text-blue-600">Percentage : {data.percentage}%</p>
+        <p className="text-blue-600 dark:text-blue-400">Percentage : {data.percentage}%</p>
 
-        <p className="text-gray-700">Score : {data.score}</p>
+        <p className="text-gray-700 dark:text-gray-300">Score : {data.score}</p>
 
-        <p className="text-gray-500 text-sm">{data.date}</p>
+        <p className="text-gray-500 dark:text-gray-400 text-sm">{data.date}</p>
       </div>
     );
   };
@@ -90,7 +94,7 @@ export default function Analysis() {
   if (err) {
     return (
       <div className="flex justify-center items-center h-80">
-        <p className="text-red-500 text-lg">{err}</p>
+        <p className="text-red-500 dark:text-red-400 text-lg">{err}</p>
       </div>
     );
   }
@@ -98,7 +102,7 @@ export default function Analysis() {
   if (chartData.length === 0) {
     return (
       <div className="flex justify-center items-center h-80">
-        <p className="text-gray-500 text-lg">No Progress Available</p>
+        <p className="text-gray-500 dark:text-gray-400 text-lg">No Progress Available</p>
       </div>
     );
   }
@@ -114,7 +118,7 @@ export default function Analysis() {
           key={i}
           x1={chartData[i].idx}
           x2={chartData[i + 1].idx}
-          fill="#f3f4f6"
+          fill={isDark ? "#1f2937" : "#f3f4f6"}
           fillOpacity={0.6}
           strokeOpacity={0}
         />
@@ -126,9 +130,9 @@ export default function Analysis() {
     <div className="max-w-6xl mx-auto px-6 py-8">
       {/* Heading */}
       <div className="mb-10">
-        <h1 className="text-4xl font-bold text-gray-800">Your Progress</h1>
+        <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100">Your Progress</h1>
 
-        <p className="text-gray-500 mt-2">
+        <p className="text-gray-500 dark:text-gray-400 mt-2">
           Monitor your performance in every examination.
         </p>
       </div>
@@ -147,7 +151,7 @@ export default function Analysis() {
           >
             {stripes}
 
-            <CartesianGrid stroke="#d1d5db" strokeDasharray="0" />
+            <CartesianGrid stroke={isDark ? "#374151" : "#d1d5db"} strokeDasharray="0" />
 
             {/* ✅ FIX: dataKey is now the unique idx, not date */}
             <XAxis dataKey="idx" hide />
@@ -157,7 +161,7 @@ export default function Analysis() {
               ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
               tick={{
                 fontSize: 12,
-                fill: "#6b7280",
+                fill: isDark ? "#9ca3af" : "#6b7280",
               }}
               axisLine={false}
               tickLine={false}
@@ -168,12 +172,12 @@ export default function Analysis() {
             <Line
               type="linear"
               dataKey="percentage"
-              stroke="#2563eb"
+              stroke={isDark ? "#60a5fa" : "#2563eb"}
               strokeWidth={3}
               dot={{
                 r: 4,
-                fill: "#2563eb",
-                stroke: "#2563eb",
+                fill: isDark ? "#60a5fa" : "#2563eb",
+                stroke: isDark ? "#60a5fa" : "#2563eb",
               }}
               activeDot={{
                 r: 6,

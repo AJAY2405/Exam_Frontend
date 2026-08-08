@@ -58,7 +58,7 @@ const appRouter = createBrowserRouter([
       { path: "/about", element: <About /> },
       { path: "/profile", element: <Profile /> },
 
-      // ✅ Student routes
+      // Student routes
       { path: "/test", element: <StudentPages /> },
       { path: "/progress", element: <ProgressPage /> },
       // { path: "/student/tests/:id", element: <TakeTest /> },
@@ -66,7 +66,7 @@ const appRouter = createBrowserRouter([
       { path: "/review/:resultId", element: <TestReview /> },
       { path: "/notices", element: <Notices/> },
 
-      // ✅ Teacher-only routes
+      // Teacher-only routes
       {
         path: "/teacher/create-test",
         element: (
@@ -100,7 +100,7 @@ const appRouter = createBrowserRouter([
         ),
       },
 
-      // ✅ Notes (Teacher only)
+      // Notes (Teacher only)
       {
         path: "/notes/upload",
         element: (
@@ -114,7 +114,7 @@ const appRouter = createBrowserRouter([
         element: <NotesList />,
       },
 
-      // ✅ Class management (Teacher only)
+      // Class management (Teacher only)
       
       
      
@@ -150,7 +150,7 @@ function App() {
 
   return (
     <>
-      {/* 🔥 Loader */}
+      {/*  Loader */}
       <AnimatePresence mode="wait">
         {loading && (
           <motion.div
@@ -190,7 +190,7 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* 🚀 Main App */}
+      {/*Main App */}
       {!loading && (
         <>
           <RouterProvider router={appRouter} />

@@ -34,3 +34,12 @@ body,
 html {
   scroll-behavior: smooth;
 }
+
+
+
+/* ✅ Enable class-based dark mode (Tailwind v4 defaults to OS-only media-query dark mode).
+   This makes `dark:` classes respond to the .dark class on <html> that theme-provider.jsx toggles. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ...rest of your existing CSS below ... */
+

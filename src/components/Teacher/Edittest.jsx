@@ -135,21 +135,25 @@ function EditTest() {
   };
 
   if (loading) {
-    return <div className="p-4 max-w-3xl mx-auto mt-15">Loading test...</div>;
+    return (
+      <div className="p-4 max-w-3xl mx-auto mt-15 bg-white dark:bg-black text-black dark:text-white min-h-screen transition-colors duration-300">
+        Loading test...
+      </div>
+    );
   }
 
   return (
-    <div className="p-4 max-w-3xl mx-auto mt-15">
+    <div className="p-4 max-w-3xl mx-auto mt-15 bg-white dark:bg-black text-black dark:text-white transition-colors duration-300">
       <div className="flex gap-2 mb-4">
         <Link
           to="/teacher/tests"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500"
+          className="bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-500 dark:hover:bg-blue-600"
         >
           View All Tests
         </Link>
         <Link
           to="/teacher/create-test"
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500"
+          className="bg-green-600 dark:bg-green-700 text-white px-4 py-2 rounded hover:bg-green-500 dark:hover:bg-green-600"
         >
           Create New Test
         </Link>
@@ -158,14 +162,14 @@ function EditTest() {
       <h2 className="text-xl font-bold mb-4">Edit Test</h2>
       <form onSubmit={submitEdit}>
         <input
-          className="border p-2 w-full mb-2"
+          className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white p-2 w-full mb-2 rounded"
           placeholder="Test Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
         />
         <textarea
-          className="border p-2 w-full mb-4"
+          className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white p-2 w-full mb-4 rounded"
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
@@ -173,32 +177,32 @@ function EditTest() {
 
         {/* ✅ NEW: Duration field */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             ⏱ Test Duration (in minutes)
           </label>
           <input
             type="number"
             min="1"
-            className="border p-2 w-full sm:w-48"
+            className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white p-2 w-full sm:w-48 rounded"
             placeholder="e.g. 30"
             value={duration}
             onChange={(e) => setDuration(e.target.value)}
             required
           />
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
             Students will have this much time to complete the test once they start.
           </p>
         </div>
 
         {questions.map((q, qIndex) => (
-          <div key={qIndex} className="border p-4 mb-4 rounded">
+          <div key={qIndex} className="border border-gray-300 dark:border-gray-700 p-4 mb-4 rounded">
             <div className="flex justify-between items-start mb-2">
-              <span className="text-sm text-gray-500">Question {qIndex + 1}</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">Question {qIndex + 1}</span>
               {questions.length > 1 && (
                 <button
                   type="button"
                   onClick={() => removeQuestion(qIndex)}
-                  className="text-red-600 text-sm hover:underline"
+                  className="text-red-600 dark:text-red-400 text-sm hover:underline"
                 >
                   Remove
                 </button>
@@ -206,7 +210,7 @@ function EditTest() {
             </div>
 
             <input
-              className="border p-2 w-full mb-2"
+              className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white p-2 w-full mb-2 rounded"
               placeholder="Question"
               value={q.question}
               onChange={(e) => handleQuestionChange(qIndex, "question", e.target.value)}
@@ -215,7 +219,7 @@ function EditTest() {
             {["A", "B", "C", "D"].map((opt) => (
               <input
                 key={opt}
-                className="border p-2 w-full mb-2"
+                className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white p-2 w-full mb-2 rounded"
                 placeholder={`Option ${opt}`}
                 value={q.options[opt]}
                 onChange={(e) => handleOptionChange(qIndex, opt, e.target.value)}
@@ -223,7 +227,7 @@ function EditTest() {
             ))}
 
             <select
-              className="border p-2 w-full mb-2"
+              className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white p-2 w-full mb-2 rounded"
               value={q.correctAnswer}
               onChange={(e) => handleQuestionChange(qIndex, "correctAnswer", e.target.value)}
             >
@@ -236,11 +240,11 @@ function EditTest() {
 
             {q.existingImage && !q.image && (
               <div className="mb-2">
-                <p className="text-sm text-gray-500 mb-1">Current image:</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Current image:</p>
                 <img
                   src={q.existingImage}
                   alt="Question"
-                  className="h-24 rounded border"
+                  className="h-24 rounded border border-gray-300 dark:border-gray-700"
                 />
               </div>
             )}
@@ -248,12 +252,12 @@ function EditTest() {
             <input
               type="file"
               accept="image/*"
-              className="mb-2"
+              className="mb-2 text-black dark:text-white"
               onChange={(e) => handleImageChange(qIndex, e.target.files[0])}
             />
 
             {q.image && (
-              <p className="text-sm text-green-600">
+              <p className="text-sm text-green-600 dark:text-green-400">
                 New image selected: {q.image.name}
               </p>
             )}
@@ -262,14 +266,14 @@ function EditTest() {
 
         <button
           type="button"
-          className="bg-yellow-600 text-white p-2 rounded mr-2 hover:bg-amber-500"
+          className="bg-yellow-600 dark:bg-yellow-700 text-white p-2 rounded mr-2 hover:bg-amber-500 dark:hover:bg-amber-600"
           onClick={addQuestion}
         >
           Add Question
         </button>
         <button
           type="submit"
-          className="bg-green-600 text-white p-2 rounded hover:bg-green-500"
+          className="bg-green-600 dark:bg-green-700 text-white p-2 rounded hover:bg-green-500 dark:hover:bg-green-600"
         >
           Save Changes
         </button>

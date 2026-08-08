@@ -1,167 +1,3 @@
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { ChevronLeft, ChevronRight } from "lucide-react";
-// import Contact from "./Contact";
-
-// /* ================= DATA ================= */
-
-// const teachers = [
-//   {
-//     id: 1,
-//     name: "Mr. Shivam Sahani",
-//     subject: "Mathematics / English",
-//     qualification: "B.Sc, M.Sc",
-//     image: "/Images/teacher1.jpg",
-//   },
-//   {
-//     id: 2,
-//     name: "Mr. Ajay Sahani",
-//     subject: "Science / Math / Computer",
-//     qualification: "B.Tech Computer Science [AI & ML]",
-//     image: "/Images/teacher3.jpg",
-//   },
-//   {
-//     id: 3,
-//     name: "Mr. Nirbhay Sahani",
-//     subject: "Hindi / General Knowledge",
-//     qualification: "B.A [Hindi], BTC",
-//     image: "/Images/teacher4.jpg",
-//   },
-// ];
-
-// const achievers = [
-//   {
-//     id: 1,
-//     name: "XYZ Singh",
-//     achievement: "10th Topper 2024",
-//     qualification: "96%",
-//     image: "/Images/student1.jpg",
-//   },
-//   {
-//     id: 2,
-//     name: "XYZ Sahani",
-//     achievement: "12th Selection",
-//     qualification: "92%",
-//     image: "/Images/student2.jpg",
-//   },
-// ];
-
-// /* ================= SLIDER ================= */
-
-// function Slider({ data, type }) {
-//   const [index, setIndex] = useState(1);
-
-//   const nextCard = () => {
-//     setIndex((prev) => (prev + 1) % data.length);
-//   };
-
-//   const prevCard = () => {
-//     setIndex((prev) => (prev - 1 + data.length) % data.length);
-//   };
-
-//   const current = data[index];
-
-//   return (
-//     <section className="py-5">
-//       <h2 className="text-3xl font-bold text-center mb-10 text-black">
-//         {type === "teacher" ? "Our Teachers" : "Our Achievers"}
-//       </h2>
-
-//       <div className="flex items-center justify-center gap-8">
-//         {/* Previous */}
-//         <button onClick={prevCard}>
-//           <ChevronLeft
-//             size={25}
-//             strokeWidth={2.5}
-//             className="text-orange-500 hover:text-orange-600 transition cursor-pointer"
-//           />
-//         </button>
-
-//         {/* Card */}
-//         <div className="w-[300px] bg-white rounded-2xl shadow-lg border border-orange-100 p-6 text-center">
-//           <img
-//             src={current.image}
-//             alt={current.name}
-//             className="w-24 h-24 rounded-full object-cover border-4 border-orange-500 mx-auto"
-//           />
-
-//           <h3 className="mt-4 text-xl font-semibold text-black">
-//             {current.name}
-//           </h3>
-
-//           <p className="mt-2 text-orange-500 font-medium">
-//             {type === "teacher"
-//               ? current.subject
-//               : current.achievement}
-//           </p>
-
-//           <p className="mt-2 text-gray-600">
-//             {current.qualification}
-//           </p>
-//         </div>
-
-//         {/* Next */}
-//         <button onClick={nextCard}>
-//           <ChevronRight
-//             size={25}
-//             strokeWidth={2.5}
-//             className="text-orange-500 hover:text-orange-600 transition cursor-pointer"
-//           />
-//         </button>
-//       </div>
-//     </section>
-//   );
-// }
-
-// /* ================= HOME ================= */
-
-// function HomeSection() {
-//   const navigate = useNavigate();
-
-//   return (
-//     <div className="min-h-screen bg-white px-6 py-15 space-y-16 ">
-//       {/* Hero */}
-//       <section className="text-center">
-//         <img
-//           src="/Images/logo.png"
-//           alt="Logo"
-//           className="w-36 mx-auto"
-//         />
-
-//         <p className="max-w-3xl mx-auto mt-4 text-gray-700">
-//           We prepare students for CHS, UP Board, CBSE, Bihar Board, and JNV
-//           with expert faculty and modern teaching methods.
-//         </p>
-//       </section>
-
-//       {/* Announcement */}
-//       <section className="flex justify-center">
-//         <button
-//           onClick={() => navigate("/announcement")}
-//           className="px-6 py-3 rounded-full bg-orange-500 text-white hover:bg-orange-600"
-//         >
-//           Announcements
-//         </button>
-//       </section>
-
-//       {/* Teachers */}
-//       <Slider data={teachers} type="teacher" />
-
-//       {/* Achievers */}
-//       <Slider data={achievers} type="achiever" />
-
-//       {/* Contact */}
-//       {/* <Contact /> */}
-//     </div>
-//   );
-// }
-
-// export default HomeSection;
-
-
-
-
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -182,9 +18,9 @@ import {
   USER_API_END_POINT,
 } from "../utils/constants";
 import Analysis from "./Student/Analysis";
-
+ 
 /* ================= DATA ================= */
-
+ 
 const achievers = [
   {
     id: 1,
@@ -201,9 +37,9 @@ const achievers = [
     image: "/Images/student2.jpg",
   },
 ];
-
+ 
 /* ================= HELPERS ================= */
-
+ 
 // Handles responses shaped as: [] , { data: [] }, { students: [] },
 // { tests: [] }, { notes: [] }, { notices: [] }, { count: N } etc.
 function extractList(payload) {
@@ -224,40 +60,40 @@ function extractList(payload) {
   }
   return [];
 }
-
+ 
 function extractCount(payload, list) {
   if (payload && typeof payload.count === "number") return payload.count;
   if (payload && typeof payload.total === "number") return payload.total;
   return list.length;
 }
-
+ 
 function getTimestamp(item) {
   const raw = item.createdAt || item.date || item.updatedAt || null;
   const t = raw ? new Date(raw).getTime() : 0;
   return Number.isNaN(t) ? 0 : t;
 }
-
+ 
 /* ================= SLIDER ================= */
-
+ 
 function Slider({ data, type }) {
   const [index, setIndex] = useState(0);
-
+ 
   const nextCard = () => {
     setIndex((prev) => (prev + 1) % data.length);
   };
-
+ 
   const prevCard = () => {
     setIndex((prev) => (prev - 1 + data.length) % data.length);
   };
-
+ 
   const current = data[index];
-
+ 
   return (
     <section className="py-5">
-      <h2 className="text-3xl font-bold text-center mb-10 text-black">
+      <h2 className="text-3xl font-bold text-center mb-10 text-black dark:text-white">
         Our Achievers
       </h2>
-
+ 
       <div className="flex items-center justify-center gap-8">
         {/* Previous */}
         <button onClick={prevCard}>
@@ -267,28 +103,28 @@ function Slider({ data, type }) {
             className="text-orange-500 hover:text-orange-600 transition cursor-pointer"
           />
         </button>
-
+ 
         {/* Card */}
-        <div className="w-[300px] bg-white rounded-2xl shadow-lg border border-orange-100 p-6 text-center">
+        <div className="w-[300px] bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-orange-100 dark:border-orange-500/20 p-6 text-center">
           <img
             src={current.image}
             alt={current.name}
             className="w-24 h-24 rounded-full object-cover border-4 border-orange-500 mx-auto"
           />
-
-          <h3 className="mt-4 text-xl font-semibold text-black">
+ 
+          <h3 className="mt-4 text-xl font-semibold text-black dark:text-white">
             {current.name}
           </h3>
-
+ 
           <p className="mt-2 text-orange-500 font-medium">
             {current.achievement}
           </p>
-
-          <p className="mt-2 text-gray-600">
+ 
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
             {current.qualification}
           </p>
         </div>
-
+ 
         {/* Next */}
         <button onClick={nextCard}>
           <ChevronRight
@@ -301,25 +137,25 @@ function Slider({ data, type }) {
     </section>
   );
 }
-
+ 
 /* ================= STATS SECTION (live data from MongoDB via API) ================= */
-
+ 
 function StatCard({ icon: Icon, label, value, loading }) {
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-orange-100 p-6 text-center flex flex-col items-center">
-      <div className="w-14 h-14 rounded-full bg-orange-100 flex items-center justify-center mb-4">
+    <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-orange-100 dark:border-orange-500/20 p-6 text-center flex flex-col items-center">
+      <div className="w-14 h-14 rounded-full bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center mb-4">
         <Icon size={26} className="text-orange-500" />
       </div>
       {loading ? (
-        <div className="h-8 w-16 bg-gray-200 rounded animate-pulse mb-2" />
+        <div className="h-8 w-16 bg-gray-200 dark:bg-gray-700 rounded animate-pulse mb-2" />
       ) : (
-        <h3 className="text-3xl font-extrabold text-black mb-1">{value}</h3>
+        <h3 className="text-3xl font-extrabold text-black dark:text-white mb-1">{value}</h3>
       )}
-      <p className="text-gray-600 font-medium">{label}</p>
+      <p className="text-gray-600 dark:text-gray-400 font-medium">{label}</p>
     </div>
   );
 }
-
+ 
 function StatsSection() {
   const [totalStudents, setTotalStudents] = useState(0);
   const [totalTests, setTotalTests] = useState(0);
@@ -328,11 +164,11 @@ function StatsSection() {
   const [latestUpdate, setLatestUpdate] = useState(null); // { type: "notice" | "test", title, message, date }
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
-
+ 
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
-
+ 
     Promise.allSettled([
       axios.get(USER_API_END_POINT, { withCredentials: true }),
       axios.get(TEST_API_END_POINT, { withCredentials: true }),
@@ -340,11 +176,11 @@ function StatsSection() {
       axios.get(NOTICE_API_END_POINT, { withCredentials: true }),
     ]).then(([usersRes, testsRes, notesRes, noticesRes]) => {
       if (cancelled) return;
-
+ 
       const failedRequests = [];
       let testList = [];
       let noticeList = [];
-
+ 
       // Students = total users on the website
       if (usersRes.status === "fulfilled") {
         const list = extractList(usersRes.value.data);
@@ -354,7 +190,7 @@ function StatsSection() {
       } else {
         failedRequests.push("students");
       }
-
+ 
       // Tests
       if (testsRes.status === "fulfilled") {
         testList = extractList(testsRes.value.data);
@@ -362,7 +198,7 @@ function StatsSection() {
       } else {
         failedRequests.push("tests");
       }
-
+ 
       // PDFs / Notes
       if (notesRes.status === "fulfilled") {
         const list = extractList(notesRes.value.data);
@@ -370,14 +206,14 @@ function StatsSection() {
       } else {
         failedRequests.push("pdfs");
       }
-
+ 
       // Notices
       if (noticesRes.status === "fulfilled") {
         noticeList = extractList(noticesRes.value.data);
       } else {
         failedRequests.push("notices");
       }
-
+ 
       // ---- Combine notices + tests, pick the most recent one ----
       const combined = [
         ...noticeList.map((n) => ({
@@ -393,10 +229,10 @@ function StatsSection() {
           date: getTimestamp(t),
         })),
       ];
-
+ 
       combined.sort((a, b) => b.date - a.date);
       setLatestUpdate(combined[0] || null);
-
+ 
       setErr(
         failedRequests.length > 0
           ? `Couldn't load: ${failedRequests.join(", ")}`
@@ -404,24 +240,24 @@ function StatsSection() {
       );
       setLoading(false);
     });
-
+ 
     return () => {
       cancelled = true;
     };
   }, []);
-
+ 
   const isTest = latestUpdate?.type === "test";
-
+ 
   return (
     <section className="py-5">
-      <h2 className="text-3xl font-bold text-center mb-10 text-black">
+      <h2 className="text-3xl font-bold text-center mb-10 text-black dark:text-white">
         Our Numbers
       </h2>
-
+ 
       {err && (
-        <p className="text-center text-red-600 mb-6 text-sm">{err}</p>
+        <p className="text-center text-red-600 dark:text-red-400 mb-6 text-sm">{err}</p>
       )}
-
+ 
       {/* 2 cards per row grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
         <StatCard
@@ -442,9 +278,9 @@ function StatsSection() {
           value={totalPdfs}
           loading={loading}
         />
-
+ 
         {/* Latest Update card — same grid, same size as the stat cards */}
-        <div className="bg-white rounded-2xl shadow-lg border border-orange-100 p-6 text-left flex flex-col justify-center">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-orange-100 dark:border-orange-500/20 p-6 text-left flex flex-col justify-center">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-12 h-12 shrink-0 rounded-full bg-orange-500 flex items-center justify-center">
               {isTest ? (
@@ -454,54 +290,54 @@ function StatsSection() {
               )}
             </div>
             <div>
-              <h4 className="font-semibold text-black text-sm">
+              <h4 className="font-semibold text-black dark:text-white text-sm">
                 {isTest ? "New Test" : "Latest Notice"}
               </h4>
               {latestUpdate && (
-                <span className="text-[10px] uppercase tracking-wide bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] uppercase tracking-wide bg-orange-100 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400 px-2 py-0.5 rounded-full">
                   {latestUpdate.type}
                 </span>
               )}
             </div>
           </div>
-
+ 
           {loading ? (
-            <div className="h-4 w-32 bg-gray-200 rounded animate-pulse" />
+            <div className="h-4 w-32 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
           ) : latestUpdate ? (
             <>
-              <p className="text-orange-600 font-medium text-sm">
+              <p className="text-orange-600 dark:text-orange-400 font-medium text-sm">
                 {latestUpdate.title}
               </p>
-              <p className="text-gray-600 text-xs mt-1 line-clamp-2">
+              <p className="text-gray-600 dark:text-gray-400 text-xs mt-1 line-clamp-2">
                 {latestUpdate.message}
               </p>
             </>
           ) : (
-            <p className="text-gray-500 text-sm">No updates yet.</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">No updates yet.</p>
           )}
         </div>
       </div>
     </section>
   );
 }
-
+ 
 /* ================= HOME ================= */
-
+ 
 function HomeSection() {
   const navigate = useNavigate();
-
+ 
   return (
-    <div className="min-h-screen bg-white px-6 py-15 space-y-16 ">
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white px-6 py-15 space-y-16 transition-colors duration-300">
       {/* Hero */}
       <section className="text-center">
         <img src="/Images/logo.png" alt="Logo" className="w-36 mx-auto" />
-
-        <p className="max-w-3xl mx-auto mt-4 text-gray-700">
+ 
+        <p className="max-w-3xl mx-auto mt-4 text-gray-700 dark:text-gray-300">
           We prepare students for CHS, UP Board, CBSE, Bihar Board, and JNV
           with expert faculty and modern teaching methods.
         </p>
       </section>
-
+ 
       {/* Announcement */}
       <section className="flex justify-center">
         <button
@@ -511,18 +347,18 @@ function HomeSection() {
           Announcements
         </button>
       </section>
-
+ 
       {/* Live stats: students / tests / pdfs / newest notice-or-test */}
       <StatsSection />
       <Analysis/>
-
+ 
       {/* Achievers — last section */}
       <Slider data={achievers} type="achiever" />
-
+ 
       {/* Contact */}
       {/* <Contact /> */}
     </div>
   );
 }
-
+ 
 export default HomeSection;

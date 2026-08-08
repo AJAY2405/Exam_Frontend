@@ -83,11 +83,11 @@ const UploadNote = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 px-4 py-20">
+    <div className="min-h-screen bg-gray-100 dark:bg-black px-4 py-20 transition-colors duration-300">
       {/* Upload form */}
       <div className="flex items-center justify-center">
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
-          <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
+        <div className="w-full max-w-md bg-white dark:bg-gray-900 border border-transparent dark:border-gray-800 rounded-2xl shadow-lg dark:shadow-none p-6">
+          <h2 className="text-2xl font-semibold text-center text-gray-800 dark:text-white mb-6">
             📄 Upload Your Note
           </h2>
           <form onSubmit={handleUpload} className="flex flex-col gap-4">
@@ -97,7 +97,7 @@ const UploadNote = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
 
             <input
@@ -105,12 +105,12 @@ const UploadNote = () => {
               accept="application/pdf"
               onChange={(e) => setPdf(e.target.files[0])}
               required
-              className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 cursor-pointer"
+              className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white cursor-pointer"
             />
 
             <button
               type="submit"
-              className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-3 bg-green-600 text-white rounded-lg font-semibold transition-all duration-300 ease-in-out hover:bg-green-500 active:bg-green-800"
+              className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-3 bg-green-600 dark:bg-green-700 text-white rounded-lg font-semibold transition-all duration-300 ease-in-out hover:bg-green-500 dark:hover:bg-green-600 active:bg-green-800 dark:active:bg-green-800"
             >
               Upload PDF
             </button>
@@ -120,14 +120,14 @@ const UploadNote = () => {
 
       {/* Notes list */}
       <div className="max-w-3xl mx-auto mt-10">
-        <h3 className="text-xl font-semibold text-gray-800 mb-4">
+        <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
           All Uploaded Notes
         </h3>
 
         {loadingNotes ? (
-          <p className="text-gray-500">Loading notes...</p>
+          <p className="text-gray-500 dark:text-gray-400">Loading notes...</p>
         ) : notes.length === 0 ? (
-          <p className="text-gray-500">No notes uploaded yet.</p>
+          <p className="text-gray-500 dark:text-gray-400">No notes uploaded yet.</p>
         ) : (
           <div className="space-y-3">
             {notes.map((note) => {
@@ -135,11 +135,11 @@ const UploadNote = () => {
               return (
                 <div
                   key={note._id}
-                  className="bg-white border rounded-xl p-4 flex justify-between items-center shadow-sm"
+                  className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 flex justify-between items-center shadow-sm dark:shadow-none"
                 >
                   <div>
-                    <h4 className="font-semibold text-gray-800">{note.title}</h4>
-                    <p className="text-sm text-gray-500">
+                    <h4 className="font-semibold text-gray-800 dark:text-white">{note.title}</h4>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                       Uploaded by {note.uploadedBy?.name || "Unknown"} ·{" "}
                       {formatDate(note.createdAt)}
                     </p>
@@ -150,7 +150,7 @@ const UploadNote = () => {
                       href={note.pdfUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline text-sm"
+                      className="text-blue-600 dark:text-blue-400 hover:underline text-sm"
                     >
                       View PDF
                     </a>
@@ -159,7 +159,7 @@ const UploadNote = () => {
                       <button
                         onClick={() => handleDelete(note._id, note.title)}
                         disabled={deletingId === note._id}
-                        className="bg-red-600 text-white px-3 py-1.5 rounded text-sm hover:bg-red-500 disabled:opacity-50"
+                        className="bg-red-600 dark:bg-red-700 text-white px-3 py-1.5 rounded text-sm hover:bg-red-500 dark:hover:bg-red-600 disabled:opacity-50"
                       >
                         {deletingId === note._id ? "Deleting..." : "Delete"}
                       </button>

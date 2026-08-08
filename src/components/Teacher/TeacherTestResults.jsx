@@ -109,25 +109,25 @@ const TeacherTestResults = () => {
   };
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto mt-6 sm:mt-15">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800 text-center sm:text-left mt-10">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto mt-6 sm:mt-15 bg-white dark:bg-black text-black dark:text-white min-h-screen transition-colors duration-300">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800 dark:text-white text-center sm:text-left mt-10">
         📊 Student Test Results
       </h1>
 
       {/* Show test list */}
       {!selectedTest && (
         <div>
-          <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">
+          <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300">
             All Tests
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {tests.map((test) => (
               <div
                 key={test._id}
-                className="p-4 sm:p-5 border rounded-xl sm:rounded-2xl shadow hover:shadow-lg cursor-pointer transition bg-white"
+                className="p-4 sm:p-5 border border-gray-200 dark:border-gray-800 rounded-xl sm:rounded-2xl shadow hover:shadow-lg dark:shadow-none cursor-pointer transition bg-white dark:bg-gray-900"
                 onClick={() => fetchSubmissions(test._id)}
               >
-                <h2 className="text-base sm:text-lg font-semibold text-black-600 hover:text-blue-500">
+                <h2 className="text-base sm:text-lg font-semibold text-black dark:text-white hover:text-blue-500 dark:hover:text-blue-400">
                   {test.title}
                 </h2>
                 {/* <p className="text-sm text-gray-600 mt-1 line-clamp-2">
@@ -155,7 +155,7 @@ const TeacherTestResults = () => {
             ← Back to Tests
           </button> */}
 
-          <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">
+          <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300">
             Submissions
           </h2>
 
@@ -164,7 +164,7 @@ const TeacherTestResults = () => {
             <select
               value={timeFilter}
               onChange={(e) => setTimeFilter(e.target.value)}
-              className="border px-3 py-2 rounded-lg"
+              className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white px-3 py-2 rounded-lg"
             >
               <option value="">Filter by Time</option>
               <option value="30min">Last 30 Minutes</option>
@@ -179,7 +179,7 @@ const TeacherTestResults = () => {
             <select
               value={percentageFilter}
               onChange={(e) => setPercentageFilter(e.target.value)}
-              className="border px-3 py-2 rounded-lg"
+              className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white px-3 py-2 rounded-lg"
             >
               <option value="">Filter by Percentage</option>
               <option value="40">≥ 40%</option>
@@ -192,25 +192,25 @@ const TeacherTestResults = () => {
           </div>
 
           {filteredSubmissions && filteredSubmissions.length === 0 ? (
-            <p className="text-gray-500 italic">No submissions match filters.</p>
+            <p className="text-gray-500 dark:text-gray-400 italic">No submissions match filters.</p>
           ) : (
-            <div className="overflow-x-auto rounded-lg shadow">
-              <table className="w-full border-collapse bg-white rounded-lg overflow-hidden text-sm sm:text-base">
-                <thead className="bg-gray-100">
+            <div className="overflow-x-auto rounded-lg shadow dark:shadow-none">
+              <table className="w-full border-collapse bg-white dark:bg-gray-900 rounded-lg overflow-hidden text-sm sm:text-base">
+                <thead className="bg-gray-100 dark:bg-gray-800">
                   <tr>
-                    <th className="border px-3 sm:px-4 py-2 sm:py-3 text-left">
+                    <th className="border border-gray-200 dark:border-gray-700 px-3 sm:px-4 py-2 sm:py-3 text-left text-black dark:text-white">
                       Student Name
                     </th>
-                    <th className="border px-3 sm:px-4 py-2 sm:py-3 text-left">
+                    <th className="border border-gray-200 dark:border-gray-700 px-3 sm:px-4 py-2 sm:py-3 text-left text-black dark:text-white">
                       Email
                     </th>
-                    <th className="border px-3 sm:px-4 py-2 sm:py-3 text-center">
+                    <th className="border border-gray-200 dark:border-gray-700 px-3 sm:px-4 py-2 sm:py-3 text-center text-black dark:text-white">
                       Score
                     </th>
-                    <th className="border px-3 sm:px-4 py-2 sm:py-3 text-center">
+                    <th className="border border-gray-200 dark:border-gray-700 px-3 sm:px-4 py-2 sm:py-3 text-center text-black dark:text-white">
                       Percentage
                     </th>
-                    <th className="border px-3 sm:px-4 py-2 sm:py-3 text-center">
+                    <th className="border border-gray-200 dark:border-gray-700 px-3 sm:px-4 py-2 sm:py-3 text-center text-black dark:text-white">
                       Submitted At
                     </th>
                   </tr>
@@ -220,22 +220,22 @@ const TeacherTestResults = () => {
                     <tr
                       key={s._id}
                       className={`${
-                        index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                      } hover:bg-blue-50 transition`}
+                        index % 2 === 0 ? "bg-white dark:bg-gray-900" : "bg-gray-50 dark:bg-gray-800/60"
+                      } hover:bg-blue-50 dark:hover:bg-blue-950/40 transition`}
                     >
-                      <td className="border px-3 sm:px-4 py-2">
+                      <td className="border border-gray-200 dark:border-gray-700 px-3 sm:px-4 py-2 text-black dark:text-white">
                         {s.studentName}
                       </td>
-                      <td className="border px-3 sm:px-4 py-2">
+                      <td className="border border-gray-200 dark:border-gray-700 px-3 sm:px-4 py-2 text-black dark:text-white">
                         <span className="break-all">{s.studentEmail}</span>
                       </td>
-                      <td className="border px-3 sm:px-4 py-2 text-center font-semibold text-blue-600">
+                      <td className="border border-gray-200 dark:border-gray-700 px-3 sm:px-4 py-2 text-center font-semibold text-blue-600 dark:text-blue-400">
                         {s.score}
                       </td>
-                      <td className="border px-3 sm:px-4 py-2 text-center">
+                      <td className="border border-gray-200 dark:border-gray-700 px-3 sm:px-4 py-2 text-center text-black dark:text-white">
                         {s.percentage}%
                       </td>
-                      <td className="border px-3 sm:px-4 py-2 text-center text-gray-600">
+                      <td className="border border-gray-200 dark:border-gray-700 px-3 sm:px-4 py-2 text-center text-gray-600 dark:text-gray-400">
                         {formatDateTime(s.submittedAt)}
                       </td>
                     </tr>

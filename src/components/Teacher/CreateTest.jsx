@@ -169,18 +169,18 @@ function CreateTest() {
   };
 
   return (
-    <div className="p-4 max-w-3xl mx-auto mt-15">
+    <div className="p-4 max-w-3xl mx-auto mt-15 bg-white dark:bg-black text-black dark:text-white transition-colors duration-300">
       {/* Nav buttons: view all tests / create new test */}
       <div className="flex gap-2 mb-4">
         <Link
           to="/teacher/tests"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500"
+          className="bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-500 dark:hover:bg-blue-600"
         >
           View All Tests
         </Link>
         <Link
           to="/teacher/create-test"
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500"
+          className="bg-green-600 dark:bg-green-700 text-white px-4 py-2 rounded hover:bg-green-500 dark:hover:bg-green-600"
         >
           Create New Test
         </Link>
@@ -189,9 +189,9 @@ function CreateTest() {
       <h2 className="text-xl font-bold mb-4">Create Test</h2>
 
       {/* Generate questions from a PDF */}
-      <div className="border-2 border-dashed border-blue-300 rounded p-4 mb-6 bg-blue-50">
+      <div className="border-2 border-dashed border-blue-300 dark:border-blue-800 rounded p-4 mb-6 bg-blue-50 dark:bg-blue-950/40">
         <h3 className="font-semibold mb-2">📄 Generate Questions from PDF</h3>
-        <p className="text-sm text-gray-600 mb-3">
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
           PDF must follow this format: <code>1. Question</code> / <code>A) option</code> /{" "}
           <code>B) option</code> / ... / <code>Answer: B</code>
         </p>
@@ -200,13 +200,13 @@ function CreateTest() {
             type="file"
             accept="application/pdf"
             onChange={(e) => setPdfFile(e.target.files[0])}
-            className="flex-1 border p-2 rounded bg-white"
+            className="flex-1 border border-gray-300 dark:border-gray-700 p-2 rounded bg-white dark:bg-gray-900 text-black dark:text-white"
           />
           <button
             type="button"
             onClick={handleParsePdf}
             disabled={parsingPdf}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 disabled:opacity-60"
+            className="bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-500 dark:hover:bg-blue-600 disabled:opacity-60"
           >
             {parsingPdf ? "Extracting..." : "Extract Questions"}
           </button>
@@ -215,14 +215,14 @@ function CreateTest() {
 
       <form onSubmit={submitTest}>
         <input
-          className="border p-2 w-full mb-2"
+          className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white p-2 w-full mb-2 rounded"
           placeholder="Test Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
         />
         <textarea
-          className="border p-2 w-full mb-4"
+          className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white p-2 w-full mb-4 rounded"
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
@@ -230,27 +230,27 @@ function CreateTest() {
 
         {/* ✅ NEW: Duration field */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             ⏱ Test Duration (in minutes)
           </label>
           <input
             type="number"
             min="1"
-            className="border p-2 w-full sm:w-48"
+            className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white p-2 w-full sm:w-48 rounded"
             placeholder="e.g. 30"
             value={duration}
             onChange={(e) => setDuration(e.target.value)}
             required
           />
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
             Students will have this much time to complete the test once they start.
           </p>
         </div>
 
         {questions.map((q, qIndex) => (
-          <div key={qIndex} className="border p-4 mb-4 rounded">
+          <div key={qIndex} className="border border-gray-300 dark:border-gray-700 p-4 mb-4 rounded">
             <input
-              className="border p-2 w-full mb-2"
+              className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white p-2 w-full mb-2 rounded"
               placeholder="Question"
               value={q.question}
               onChange={(e) => handleQuestionChange(qIndex, "question", e.target.value)}
@@ -259,7 +259,7 @@ function CreateTest() {
             {["A", "B", "C", "D"].map((opt) => (
               <input
                 key={opt}
-                className="border p-2 w-full mb-2"
+                className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white p-2 w-full mb-2 rounded"
                 placeholder={`Option ${opt}`}
                 value={q.options[opt]}
                 onChange={(e) => handleOptionChange(qIndex, opt, e.target.value)}
@@ -267,7 +267,7 @@ function CreateTest() {
             ))}
 
             <select
-              className="border p-2 w-full mb-2"
+              className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white p-2 w-full mb-2 rounded"
               value={q.correctAnswer}
               onChange={(e) => handleQuestionChange(qIndex, "correctAnswer", e.target.value)}
             >
@@ -282,26 +282,26 @@ function CreateTest() {
             <input
               type="file"
               accept="image/*"
-              className="mb-2"
+              className="mb-2 text-black dark:text-white"
               onChange={(e) => handleImageChange(qIndex, e.target.files[0])}
             />
 
             {q.image && (
-              <p className="text-sm text-green-600">Image selected: {q.image.name}</p>
+              <p className="text-sm text-green-600 dark:text-green-400">Image selected: {q.image.name}</p>
             )}
           </div>
         ))}
 
         <button
           type="button"
-          className="bg-yellow-600 text-white p-2 rounded mr-2 hover:bg-amber-500"
+          className="bg-yellow-600 dark:bg-yellow-700 text-white p-2 rounded mr-2 hover:bg-amber-500 dark:hover:bg-amber-600"
           onClick={addQuestion}
         >
           Add Question
         </button>
         <button
           type="submit"
-          className="bg-green-600 text-white p-2 rounded hover:bg-green-500"
+          className="bg-green-600 dark:bg-green-700 text-white p-2 rounded hover:bg-green-500 dark:hover:bg-green-600"
         >
           Save Test
         </button>
