@@ -1,10 +1,9 @@
-
 // Navbar.jsx
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "../ui/button";
-import { ModeToggle } from "../mode-toggle";
+import { useTheme } from "../theme-provider";
 import {
   User,
   Home,
@@ -20,7 +19,9 @@ import {
   LogOut,
   PanelLeftClose,
   PanelLeftOpen,
-  Settings,
+  Sun,
+  Moon,
+  User2,
 } from "lucide-react";
 import axios from "axios";
 import { USER_API_END_POINT } from "../../utils/constants";
@@ -32,10 +33,22 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const { theme, setTheme } = useTheme();
 
   // ✅ Single source of truth for open/closed — used on every screen size now.
   // true = sidebar visible; false = collapsed (icon rail on desktop, hidden on mobile)
   const [open, setOpen] = useState(true);
+
+  // Resolve "system" to an actual light/dark value so the toggle
+  // button always shows (and switches to) a concrete theme.
+  const isDark =
+    theme === "dark" ||
+    (theme === "system" &&
+      window.matchMedia?.("(prefers-color-scheme: dark)").matches);
+
+  const toggleTheme = () => {
+    setTheme(isDark ? "light" : "dark");
+  };
 
   const logoutHandler = async () => {
     try {
@@ -109,7 +122,7 @@ const Navbar = () => {
         ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         ${collapsed ? "md:w-[72px]" : "w-[250px]"}`}
       >
-        {/* Header: logo + theme toggle + collapse toggle */}
+        {/* Header: logo + collapse toggle */}
         <div
           className={`flex items-center border-b border-gray-100 dark:border-gray-800 px-3 py-4 ${
             collapsed ? "flex-col gap-2" : "justify-between"
@@ -120,8 +133,6 @@ const Navbar = () => {
           )}
 
           <div className={`flex items-center gap-1 ${collapsed ? "flex-col" : ""}`}>
-            {/* <ModeToggle /> */}
-
             <button
               onClick={() => setOpen((prev) => !prev)}
               className="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg p-2 transition"
@@ -170,7 +181,30 @@ const Navbar = () => {
         <div className="border-t border-gray-100 dark:border-gray-800 p-2">
           {user ? (
             <div className="flex flex-col gap-1">
-              
+
+              {/* 🌙 Theme toggle (replaces old Settings link) */}
+              <div className="relative group">
+                <button
+                  onClick={toggleTheme}
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition ${
+                    collapsed ? "justify-center" : ""
+                  }`}
+                >
+                  {isDark ? (
+                    <Sun size={20} className="shrink-0" />
+                  ) : (
+                    <Moon size={20} className="shrink-0" />
+                  )}
+                  {!collapsed && (
+                    <span>{isDark ? "Light Mode" : "Dark Mode"}</span>
+                  )}
+                </button>
+                {collapsed && (
+                  <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-md bg-gray-900 dark:bg-gray-700 text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                    {isDark ? "Light Mode" : "Dark Mode"}
+                  </span>
+                )}
+              </div>
               <div className="relative group">
                 <Link
                   to="/profile"
@@ -178,12 +212,12 @@ const Navbar = () => {
                     collapsed ? "justify-center" : ""
                   }`}
                 >
-                 <Settings size={20} className="shrink-0" />
-                  {!collapsed && <span>Sattings</span>}
+                 <User2 size={20} className="shrink-0" />
+                  {!collapsed && <span>Profile</span>}
                 </Link>
                 {collapsed && (
                   <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-md bg-gray-900 dark:bg-gray-700 text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-50">
-                    Sattings
+                    Profile
                   </span>
                 )}
               </div>

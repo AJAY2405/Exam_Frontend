@@ -1,6 +1,16 @@
 import React from "react";
+import { useTheme } from "./theme-provider"; // adjust path to match your project structure
 
 function About() {
+  const { theme } = useTheme();
+
+  // Resolve "system" to an actual light/dark value so the signature
+  // always shows the correct image.
+  const isDark =
+    theme === "dark" ||
+    (theme === "system" &&
+      window.matchMedia?.("(prefers-color-scheme: dark)").matches);
+
   return (
     <div
       className="min-h-screen w-full 
@@ -145,7 +155,7 @@ function About() {
         {/* Signature */}
         <div className="mt-12 flex flex-col items-center text-center">
           <img
-            src="/Images/signature.png"
+            src={isDark ? "/Images/signature2.png" : "/Images/signature.png"}
             alt="Signature"
             className="h-20 w-auto mb-2 select-none"
           />
