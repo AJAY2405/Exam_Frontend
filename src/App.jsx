@@ -22,7 +22,7 @@ import StudentPages from "./components/Student/StudentPages";
 import TakeTest from "./components/Student/TakeTest";
 
 // Teacher pages
-import TeacherPage from "./components/TeacherPage";
+// import TeacherPage from "./components/TeacherPage";
 import CreateTest from "./components/Teacher/CreateTest";
 
 // Layout
