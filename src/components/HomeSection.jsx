@@ -387,7 +387,7 @@ import {
   USER_API_END_POINT,
 } from "../utils/constants";
 import Analysis from "./Student/Analysis";
-import students from "./AchieversData";
+import students from "./Achieversdata";
 
 /* ================= HELPERS ================= */
 
