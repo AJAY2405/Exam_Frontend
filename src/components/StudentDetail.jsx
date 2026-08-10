@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { ChevronLeft, GraduationCap, Trophy } from "lucide-react";
-import { getAchieverById } from "./achieversData";
+import { getAchieverById } from "./AchieversData";
 
 const StudentDetail = () => {
   const { id } = useParams();

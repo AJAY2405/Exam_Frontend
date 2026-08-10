@@ -387,7 +387,7 @@ import {
   USER_API_END_POINT,
 } from "../utils/constants";
 import Analysis from "./Student/Analysis";
-import students from "./achieversData";
+import students from "./AchieversData";
 
 /* ================= HELPERS ================= */
 
@@ -531,11 +531,11 @@ function Slider({ data }) {
                     {card.mark}
                   </p>
 
-                  {/* {offset === 0 && (
+                  {offset === 0 && (
                     <p className="mt-3 text-xs font-medium text-orange-400">
                       Tap to view full profile
                     </p>
-                  )} */}
+                  )}
                 </button>
               </div>
             );
